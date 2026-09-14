@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model
 {
+    use HasFactory;
     //Tells to laravel what table it should use
     protected $table = 'movies';
 
@@ -20,7 +22,7 @@ class Movie extends Model
         'language',
         'imdb_rating',
         'poster_path',
-        'active'
+        'active',
     ];
 
 }
