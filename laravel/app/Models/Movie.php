@@ -25,4 +25,9 @@ class Movie extends Model
         'active',
     ];
 
+    protected $casts = [
+        'release_date' => 'date',
+        'imdb_rating' => 'float',
+        'active' => 'boolean',
+    ];
 }
