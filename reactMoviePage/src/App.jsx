@@ -18,6 +18,7 @@ const OPTIONS = {
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   const searchMovies = async () => {
     const API_SEARCH = API_URL + `?query=${searchTerm}`;
@@ -25,6 +26,12 @@ const App = () => {
     const data = await response.json();
 
     setMovies(data.results);
+    setSelectedMovie(null);
+  };
+
+  const handleSaveMovie = (movie) => {
+    setSelectedMovie(movie);
+    alert(`Film toegevoegd: ${movie.title} (${movie.release_date})`);
   };
 
   return (
@@ -47,7 +54,7 @@ const App = () => {
       {movies?.length > 0 ? (
         <div className="container">
           {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard key={movie.id} movie={movie} onSaveMovie={handleSaveMovie} />
           ))}
         </div>
       ) : (
@@ -55,6 +62,8 @@ const App = () => {
           <h2>No movies found</h2>
         </div>
       )}
+
+      
     </div>
   );
 };
