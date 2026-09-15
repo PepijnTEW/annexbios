@@ -14,8 +14,17 @@
 
 body {
   font-family: var(--font-roboto);
-  background-color: #666666 
+  background-color: #666666;
+}
 
+.modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  background-color: #1f2123;
+  color: #f9d3b4;
 }
 
 .app {
