@@ -1,9 +1,11 @@
 import React from "react";
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, onSaveMovie }) => {
+  const releaseYear = movie.release_date ? movie.release_date.slice(0, 4) : "Unknown";
+
   return (
     <div className="movie">
       <div>
-        <p>{movie.release_date}</p>
+        <p>{releaseYear}</p>
       </div>
 
       <div>
@@ -20,6 +22,9 @@ const MovieCard = ({ movie }) => {
       <div>
         <span>{movie.vote_average.toFixed(1)}</span>
         <h3>{movie.title}</h3>
+        <button className="add-button" type="button" onClick={() => onSaveMovie(movie)}>
+          Toevoegen
+        </button>
       </div>
     </div>
   );

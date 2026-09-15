@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cinema;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
-class CinemaController extends Controller
+class GenreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class CinemaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cinema $cinema)
+    public function show(Genre $genre)
     {
         //
     }
@@ -42,7 +42,7 @@ class CinemaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cinema $cinema)
+    public function edit(Genre $genre)
     {
         //
     }
@@ -50,7 +50,7 @@ class CinemaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cinema $cinema)
+    public function update(Request $request, Genre $genre)
     {
         //
     }
@@ -58,7 +58,7 @@ class CinemaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cinema $cinema)
+    public function destroy(Genre $genre)
     {
         //
     }
