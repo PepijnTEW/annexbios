@@ -16,10 +16,5 @@ class Cinema extends Model
 
     protected $fillable = [
         'cinema_name',
-        'auth_key',
-    ];
-
-    protected $casts = [
-        'auth_key' => 'hashed',
     ];
 }
