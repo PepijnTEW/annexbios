@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\MoviesFilter;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,11 +14,14 @@ class MovieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $movies = Movie::all();
+        $filter = new MoviesFilter();
+        $filterItems = $filter->transform($request);
 
-        return $movies;
+        $movies = Movie::where($filterItems);
+
+        return new MovieCollection($movies->paginate()->appends($request->query()));
     }
 
     /**
