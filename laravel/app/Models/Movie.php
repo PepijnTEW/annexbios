@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Movie extends Model
 {
     use HasFactory;
-
     //Tells to laravel what table it should use
     protected $table = 'movies';
 
@@ -23,6 +23,20 @@ class Movie extends Model
         'language',
         'imdb_rating',
         'poster_path',
-        'active'
+        'active',
     ];
+
+    protected $casts = [
+        'release_date' => 'date',
+        'imdb_rating' => 'float',
+        'active' => 'boolean',
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\MovieGenre>
+     */
+    public function movieGenre(): HasMany
+    {
+        return $this->hasMany(MovieGenre::class);
+    }
 }

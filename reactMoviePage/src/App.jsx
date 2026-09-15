@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import SearchIcon from "./search.svg";
 import MovieCard from "./MovieCard.jsx";
+import { Button, Modal, Box, Typography } from "@mui/material";
 
 const API_KEY =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MmQzOTk4NWNkMmM2OGZlYzZiNjdkNzczODFiMjg5ZSIsIm5iZiI6MTc4OTEyMjMyMC4wNzEsInN1YiI6IjZhYTNkNzEwYjUzZGQwZTIxZTRhNmEzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wKNzl3RyxuDxHvTZydd_BOO6g8AX68sioOSNyM_4hLY";
@@ -31,9 +32,20 @@ const App = () => {
 
   const handleSaveMovie = (movie) => {
     setSelectedMovie(movie);
-    alert(`Film toegevoegd: ${movie.title} (${movie.release_date})`);
   };
-
+  const sendMovie = async () => {
+    const movieData = {
+      title: selectedMovie.title,
+      overview: selectedMovie.overview,
+      releaseDate: selectedMovie.release_date,
+      rating: selectedMovie.vote_average,
+      posterPath: selectedMovie.poster_path,
+      language: selectedMovie.original_language,
+    };
+    console.log(movieData);
+    handleClose();
+  };
+  const handleClose = () => setSelectedMovie(null);
   return (
     <div className="app">
       <h1>Anex Bios</h1>
@@ -54,7 +66,11 @@ const App = () => {
       {movies?.length > 0 ? (
         <div className="container">
           {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} onSaveMovie={handleSaveMovie} />
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              onSaveMovie={handleSaveMovie}
+            />
           ))}
         </div>
       ) : (
@@ -62,8 +78,27 @@ const App = () => {
           <h2>No movies found</h2>
         </div>
       )}
-
-      
+      <Modal open={selectedMovie !== null} onClose={handleClose}>
+        <Box className="modal-box">
+          {selectedMovie && (
+            <>
+              <Typography variant="h6">{selectedMovie.title}</Typography>
+              <Typography variant="body1">{selectedMovie.overview}</Typography>
+              <Typography variant="body2">
+                Release Date: {selectedMovie.release_date}
+              </Typography>
+              <Typography variant="body2">
+                Rating: {selectedMovie.movie_path}
+              </Typography>
+              <Typography variant="body2">
+                Language: {selectedMovie.original_language}
+              </Typography>
+              <Button onClick={handleClose}>Close</Button>
+              <Button onClick={sendMovie}>conform</Button>
+            </>
+          )}
+        </Box>
+      </Modal>
     </div>
   );
 };
