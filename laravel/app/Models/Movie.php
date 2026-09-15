@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Movie extends Model
 {
@@ -30,4 +31,12 @@ class Movie extends Model
         'imdb_rating' => 'float',
         'active' => 'boolean',
     ];
+
+    /**
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\MovieGenre>
+    */
+    public function movieGenre(): HasMany
+    {
+        return $this->hasMany(MovieGenre::class);
+    }
 }
