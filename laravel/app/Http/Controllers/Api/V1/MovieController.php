@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\MovieCollection;
+use App\Http\Resources\V1\MovieResource;
 
 class MovieController extends Controller
 {
@@ -39,7 +41,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-        //
+        return new MovieResource($movie);
     }
 
     /**
