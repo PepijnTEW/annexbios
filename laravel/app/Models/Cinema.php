@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Cinema extends Model
 {
@@ -17,4 +18,12 @@ class Cinema extends Model
     protected $fillable = [
         'cinema_name',
     ];
+
+    /**
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Cinema>
+    */
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
