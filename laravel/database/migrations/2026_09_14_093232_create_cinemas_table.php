@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('cinemas', function (Blueprint $table) {
             $table->id('cinema_id');
             $table->text('cinema_name');
-            $table->text('auth_key');
             $table->timestamps();
         });
     }
