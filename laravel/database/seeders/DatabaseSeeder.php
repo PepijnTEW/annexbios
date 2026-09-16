@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
             CinemaSeeder::class
         ]);
 
+        $this->call([
+            ShowtimesSeeder::class
+        ]);
+
         // User::factory(10)->create();
 
         // User::factory()->create([
