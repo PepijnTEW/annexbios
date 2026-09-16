@@ -33,10 +33,18 @@ class Movie extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\MovieGenre>
-     */
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\MovieGenre>
+    */
     public function movieGenre(): HasMany
     {
         return $this->hasMany(MovieGenre::class);
+    }
+
+    /**
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\Showtimes>
+    */
+    public function showtimes(): HasMany
+    {
+       return $this->hasMany(Showtimes::class);
     }
 }
