@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\ShowtimesFilter;
 use App\Models\Showtimes;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ShowtimesCollection;
+use App\Http\Resources\V1\ShowtimesResource;
 use Illuminate\Http\Request;
 
 class ShowtimesController extends Controller
@@ -12,11 +14,14 @@ class ShowtimesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new ShowtimesCollection(
-            Showtimes::all()
-        );
+        $filter = new ShowtimesFilter();
+        $filterItems = $filter->transform($request);
+
+        $showtimes = Showtimes::where($filterItems);
+
+        return new ShowtimesCollection($showtimes->paginate()->appends($request->query()));
     }
 
     /**
@@ -40,7 +45,7 @@ class ShowtimesController extends Controller
      */
     public function show(Showtimes $showtimes)
     {
-        //
+        return new ShowtimesResource($showtimes);
     }
 
     /**
