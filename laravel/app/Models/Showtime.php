@@ -30,16 +30,22 @@ class Showtime extends Model
     ];
 
     /**
+<<<<<<< HEAD:laravel/app/Models/Showtime.php
          * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Showroom, \App\Models\Showtime>
     */
     public function showroom(): BelongsTo
+=======
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showtime>
+     */
+    public function cinema(): BelongsTo
+>>>>>>> 2e817ab (create showtimes test data):laravel/app/Models/Showtimes.php
     {
         return $this->belongsTo(Showroom::class, 'showroom_id', 'showroom_id');
     }
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\Showtime>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\Showtime>
+     */
     public function movie(): BelongsTo
     {
         return $this->belongsTo(Movie::class, 'movie_id', 'movie_id');
