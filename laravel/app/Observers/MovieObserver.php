@@ -31,6 +31,11 @@ class MovieObserver
         }
     }
 
+    public function isRoomFree(): void
+    {
+
+    }
+
     public function showtimeGenerator(Movie $movie): void
     {
         $cinemas = Cinema::all();
