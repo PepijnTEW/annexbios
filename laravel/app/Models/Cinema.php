@@ -26,4 +26,12 @@ class Cinema extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    /**
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showtimes>
+    */
+    public function showtimes(): HasMany
+    {
+       return $this->hasMany(Showtimes::class);
+    }
 }
