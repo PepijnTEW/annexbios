@@ -23,6 +23,7 @@ class Movie extends Model
         'language',
         'imdb_rating',
         'poster_path',
+        'runtime',
         'active',
     ];
 
