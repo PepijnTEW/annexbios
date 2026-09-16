@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\MovieController;
+use App\Http\Controllers\Api\V1\CinemaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,5 +14,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('movies', MovieController::class); // api/v1/movies
     // Route::apiResource('showtimes', ShowtimeController::class); // api/v1/showtimes
 
-    // Route::apiResource('cinemas', CinemaController::class); // api/v1/cinemas
+    Route::apiResource('cinemas', CinemaController::class); // api/v1/cinemas
 });
