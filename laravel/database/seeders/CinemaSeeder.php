@@ -37,7 +37,13 @@ class CinemaSeeder extends Seeder
                 'cinema_id' => $cinema->cinema_id,
             ]);
 
-            $token = $user->createToken('cinema-api-token')->plainTextToken;
+            $token = $user->createToken(
+                'cinema-api-token',
+                [
+                    'movies:read',
+                    'showtimes:read'
+                ]
+            )->plainTextToken;
 
             $this->command->info("$city token: $token");
         }
