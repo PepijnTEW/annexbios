@@ -1,0 +1,29 @@
+.PMcontainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 70%;
+  margin: 0 auto;
+  gap: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+}
+.PMcard {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-evenly;
+}
+.PMrowBorder {
+  border-top: 2px solid gray;
+  grid-column: 1 / 5;
+}
+#movies-playing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  color: #f9d3b4;
+}
