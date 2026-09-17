@@ -30,12 +30,16 @@ class CinemaSeeder extends Seeder
                 'cinema_name' => "Annex Bios $city"
             ]);
 
-            User::create([
+            $user = User::create([
                 'name' => "Annex Bios $city",
                 'email' => strtolower($city) . '@annexbios.nl',
                 'password' => Hash::make('password'),
                 'cinema_id' => $cinema->cinema_id,
             ]);
+
+            $token = $user->createToken('cinema-api-token')->plainTextToken;
+
+            $this->command->info("$city token: $token");
         }
     }
 }
