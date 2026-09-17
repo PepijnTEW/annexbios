@@ -32,7 +32,7 @@ const Movie = () => {
 
   const handleSaveMovie = async (movie) => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movie.id}`,
+      `https://api.themoviedb.org/3/movie/${movie.id}?append_to_response=credits`,
       OPTIONS,
     );
     const detailedData = await response.json();
@@ -48,6 +48,9 @@ const Movie = () => {
       posterPath: selectedMovie.poster_path,
       language: selectedMovie.original_language,
       runtime: selectedMovie.runtime,
+      actors: (selectedMovie.credits?.cast ?? [])
+        .slice(0, 3)
+        .map((actor) => actor.name),
     };
     console.log(movieData);
     handleClose();
@@ -105,6 +108,13 @@ const Movie = () => {
               </Typography>
               <Typography variant="body2">
                 Runtime: {selectedMovie.id}
+              </Typography>
+              <Typography variant="body2">
+                Actors:{" "}
+                {(selectedMovie.credits?.cast ?? [])
+                  .slice(0, 3)
+                  .map((actor) => actor.name)
+                  .join(", ")}
               </Typography>
               <Button onClick={handleClose}>Close</Button>
               <Button onClick={sendMovie}>Confirm</Button>
