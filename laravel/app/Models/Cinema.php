@@ -17,11 +17,12 @@ class Cinema extends Model
 
     protected $fillable = [
         'cinema_name',
+        'auth_key',
     ];
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Cinema>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Cinema>
+     */
     public function users(): HasMany
     {
         return $this->hasMany(User::class);

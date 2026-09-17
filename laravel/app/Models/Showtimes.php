@@ -15,7 +15,7 @@ class Showtimes extends Model
 
     //Sets primary key
     protected $primaryKey = 'showtime_id';
-    protected $incrementing = true;
+    public $incrementing = true;
 
     protected $fillable = [
         'cinema_id',
@@ -29,16 +29,16 @@ class Showtimes extends Model
     ];
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showtime>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showtime>
+     */
     public function cinema(): BelongsTo
     {
         return $this->belongsTo(Cinema::class, 'cinema_id', 'cinema_id');
     }
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\Showtime>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Movie, \App\Models\Showtime>
+     */
     public function movie(): BelongsTo
     {
         return $this->belongsTo(Movie::class, 'movie_id', 'movie_id');
