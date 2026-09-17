@@ -1,106 +1,32 @@
-import "./App.css";
-import { useEffect, useState } from "react";
-import SearchIcon from "./search.svg";
-import MovieCard from "./MovieCard.jsx";
-import { Button, Modal, Box, Typography } from "@mui/material";
+import LoginPage from "./components/jsx/Login.jsx";
+import Movie from "./components/jsx/Movie.jsx";
+import { useState, useEffect } from "react";
 
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MmQzOTk4NWNkMmM2OGZlYzZiNjdkNzczODFiMjg5ZSIsIm5iZiI6MTc4OTEyMjMyMC4wNzEsInN1YiI6IjZhYTNkNzEwYjUzZGQwZTIxZTRhNmEzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wKNzl3RyxuDxHvTZydd_BOO6g8AX68sioOSNyM_4hLY";
-const API_URL = `https://api.themoviedb.org/3/search/movie`;
-
-const OPTIONS = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${API_KEY}`,
-  },
-};
+import ReactDOM from "react-dom/client";
+import "./index.css";
 
 const App = () => {
-  const [movies, setMovies] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginPage, setShowLoginPage] = useState(true);
+  const [showMoviePage, setShowMoviePage] = useState(false);
 
-  const searchMovies = async () => {
-    const API_SEARCH = API_URL + `?query=${searchTerm}`;
-    const response = await fetch(API_SEARCH, OPTIONS);
-    const data = await response.json();
-
-    setMovies(data.results);
-    setSelectedMovie(null);
+  useEffect(() => {
+    checklogin();
+  });
+  const checklogin = () => {
+    if (isLoggedIn === true) {
+      setShowMoviePage(true);
+    } else {
+      setShowLoginPage(true);
+    }
   };
-
-  const handleSaveMovie = (movie) => {
-    setSelectedMovie(movie);
-  };
-  const sendMovie = async () => {
-    const movieData = {
-      title: selectedMovie.title,
-      overview: selectedMovie.overview,
-      releaseDate: selectedMovie.release_date,
-      rating: selectedMovie.vote_average,
-      posterPath: selectedMovie.poster_path,
-      language: selectedMovie.original_language,
-    };
-    console.log(movieData);
-    handleClose();
-  };
-  const handleClose = () => setSelectedMovie(null);
   return (
-    <div className="app">
+    <>
       <h1>Anex Bios</h1>
 
-      <div className="search">
-        <input
-          placeholder="Search for movies"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <img
-          src={SearchIcon}
-          alt="search"
-          onClick={() => searchMovies(searchTerm)}
-        />
-      </div>
-
-      {movies?.length > 0 ? (
-        <div className="container">
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              onSaveMovie={handleSaveMovie}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="empty">
-          <h2>No movies found</h2>
-        </div>
-      )}
-      <Modal open={selectedMovie !== null} onClose={handleClose}>
-        <Box className="modal-box">
-          {selectedMovie && (
-            <>
-              <Typography variant="h6">{selectedMovie.title}</Typography>
-              <Typography variant="body1">{selectedMovie.overview}</Typography>
-              <Typography variant="body2">
-                Release Date: {selectedMovie.release_date}
-              </Typography>
-              <Typography variant="body2">
-                Rating: {selectedMovie.movie_path}
-              </Typography>
-              <Typography variant="body2">
-                Language: {selectedMovie.original_language}
-              </Typography>
-              <Button onClick={handleClose}>Close</Button>
-              <Button onClick={sendMovie}>conform</Button>
-            </>
-          )}
-        </Box>
-      </Modal>
-    </div>
+      {showLoginPage && <LoginPage />}
+      {showMoviePage && <Movie />}
+    </>
   );
 };
-
 export default App;
