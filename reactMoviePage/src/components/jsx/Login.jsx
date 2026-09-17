@@ -7,9 +7,9 @@ const LoginPage = () => {
   const handleSubmitLogin = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    axios.post("http://example.com/api/endpoint", formData).then((response) => {
-      setLoginData(formData);
-    });
+    // axios.post("http://example.com/api/endpoint", formData).then((response) => {
+    //   setLoginData(formData);
+    // });
   };
   return (
     <div className="my-component">
