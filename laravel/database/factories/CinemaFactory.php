@@ -19,8 +19,7 @@ class CinemaFactory extends Factory
     public function definition(): array
     {
         return [
-            'cinema_name' => fake()->name(),
-            'auth_key' => Str::random(10),
+            'cinema_name' => fake()->name()
         ];
     }
 }
