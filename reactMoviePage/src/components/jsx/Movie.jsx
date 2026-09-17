@@ -51,6 +51,7 @@ const Movie = () => {
       actors: (selectedMovie.credits?.cast ?? [])
         .slice(0, 3)
         .map((actor) => actor.name),
+      id: selectedMovie.id,
     };
     console.log(movieData);
     handleClose();
