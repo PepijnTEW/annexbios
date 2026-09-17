@@ -6,10 +6,11 @@ const LoginPage = () => {
   const [logindata, setLoginData] = useState({});
   const handleSubmitLogin = (event) => {
     event.preventDefault();
-    const formData = new formData(event.target);
-    axios.post("http://example.com/api/endpoint", formData).then((response) => {
-      setLoginData(formData);
-    });
+    const formData = new FormData(event.target);
+    console.log("Ingevulde logindata:", Object.fromEntries(formData));
+    // axios.post("http://example.com/api/endpoint", formData).then((response) => {
+    //   setLoginData(formData);
+    // });
   };
   return (
     <div className="my-component">
