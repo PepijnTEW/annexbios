@@ -3,8 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Movie;
-use App\Models\Cinema;
-use App\Models\Showtimes;
 
 
 class MovieObserver
@@ -16,7 +14,7 @@ class MovieObserver
     {
         if ($movie->active)
         {
-            $this->showtimeGenerator($movie);
+            $this->schedule($movie);
         }
     }
 
@@ -25,20 +23,28 @@ class MovieObserver
      */
     public function updated(Movie $movie): void
     {
+        if(! $movie ->wasChanged('active'))
+        {
+            return;
+        }
+
         if($movie->wasChanged('active') && $movie->active )
         {
-            $this->showtimeGenerator($movie);
+            $this->schedule($movie);
+        } else {
+            $this->unSchedule($movie);
         }
+
     }
 
-    public function isRoomFree(): void
+
+    public function schedule(Movie $movie): void
     {
 
     }
 
-    public function showtimeGenerator(Movie $movie): void
+    public function unSchedule(Movie $movie): void
     {
-        $cinemas = Cinema::all();
-        $showtimes = Showtimes::all();
+
     }
 }

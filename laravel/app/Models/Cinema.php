@@ -20,7 +20,7 @@ class Cinema extends Model
     ];
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Cinema>
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\User, \App\Models\Cinema>
     */
     public function users(): HasMany
     {
@@ -28,10 +28,10 @@ class Cinema extends Model
     }
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showtimes>
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Showtime, \App\Models\Cinema>
     */
     public function showtimes(): HasMany
     {
-       return $this->hasMany(Showtimes::class);
+       return $this->hasMany(Showtime::class);
     }
 }
