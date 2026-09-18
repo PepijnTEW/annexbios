@@ -7,20 +7,21 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // comment the checklogin function and put true in the usestate below to test certain pages
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [showLoginPage, setShowLoginPage] = useState(false);
-  const [showMoviePage, setShowMoviePage] = useState(true);
-  const [moviesPlayingPage, setMoviesPlayingPage] = useState(true);
+  const [showMoviePage, setShowMoviePage] = useState(false);
+  const [moviesPlayingPage, setMoviesPlayingPage] = useState(false);
 
   useEffect(() => {
     checklogin();
   });
   const checklogin = () => {
-    // if (isLoggedIn === true) {
-    //   setShowMoviePage(true);
-    // } else {
-    //   setShowLoginPage(true);
-    // }
+    if (isLoggedIn === true) {
+      setShowMoviePage(true);
+    } else {
+      setShowLoginPage(true);
+    }
   };
   return (
     <>
