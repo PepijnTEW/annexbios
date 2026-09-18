@@ -25,6 +25,7 @@ body {
   padding: 2rem;
   background-color: #1f2123;
   color: #f9d3b4;
+  box-shadow: 10px 10px black;
 }
 
 .app {

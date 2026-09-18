@@ -9,7 +9,7 @@ import "./index.css";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPage, setShowLoginPage] = useState(false);
-  const [showMoviePage, setShowMoviePage] = useState(false);
+  const [showMoviePage, setShowMoviePage] = useState(true);
   const [moviesPlayingPage, setMoviesPlayingPage] = useState(true);
 
   useEffect(() => {
