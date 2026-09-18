@@ -32,10 +32,10 @@ class User extends Authenticatable
     }
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Cinema>
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\User>
     */
     public function cinema(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'cinema_id', 'cinema_id');
+        return $this->belongsTo(Cinema::class, 'cinema_id', 'cinema_id');
     }
 }
