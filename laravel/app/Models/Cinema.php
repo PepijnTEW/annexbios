@@ -40,6 +40,7 @@ class Cinema extends Model
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
          * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Showroom, \App\Models\Cinema>
 =======
          * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Showtime, \App\Models\Cinema>
@@ -52,5 +53,12 @@ class Cinema extends Model
 =======
        return $this->hasMany(Showtime::class);
 >>>>>>> 4000ba8 (rebase done)
+=======
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Showroom, \App\Models\Cinema>
+    */
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Showroom::class, 'cinema_id', 'cinema_id');
+>>>>>>> 11d27a4 (cleaned up the migrations so they work and gave up on automation)
     }
 }

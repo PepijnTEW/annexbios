@@ -21,9 +21,12 @@ class Showtime extends Model
         'showroom_id',
         'movie_id',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         'date',
 >>>>>>> 4000ba8 (rebase done)
+=======
+>>>>>>> 11d27a4 (cleaned up the migrations so they work and gave up on automation)
         'start_time',
         'end_time',
     ];
