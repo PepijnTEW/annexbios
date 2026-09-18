@@ -21,7 +21,7 @@ class CinemaSeeder extends Seeder
             'Bilthoven',
             'Montfoort',
             'Woerden',
-            'Leidsche Rijn',
+            'LeidscheRijn',
             'Zeist'
         ];
 
