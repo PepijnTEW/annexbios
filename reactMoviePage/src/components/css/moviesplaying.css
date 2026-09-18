@@ -27,3 +27,31 @@
   margin-top: 2rem;
   color: #f9d3b4;
 }
+.PMmodal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.PMmodal-content {
+  padding: 2rem;
+  background-color: #1f2123;
+  box-shadow: 10px 10px;
+}
+.PMmodal-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #000000;
+  color: #1f2123;
+  font-weight: bold;
+  cursor: pointer;
+  color: #f9d3b4;
+}
+.PMsaveButton {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #086dba;
+  color: #f9d3b4;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
