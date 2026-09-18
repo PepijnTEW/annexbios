@@ -62,42 +62,4 @@ class Movie extends Model
     {
        return $this->belongsToMany(Actor::class, 'casts', 'movie_id', 'actor_id');
     }
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Builder<\App\Models\Movie>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<\App\Models\Movie>
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', true);
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {
-        return (bool) $this->active;
-    }
-
-    /**
-        * Determine if this movie runs on the given date.
-        *
-        * @param  \Carbon\Carbon  $date
-        * @return bool
-        */
-       public function runsOn(\Carbon\Carbon $date): bool
-       {
-           $start = $this->run_starts_at ?? $this->release_date;
-           $end   = $this->run_ends_at   ?? $start?->copy()->addWeeks(2);
-
-           if ($start && $date->lt($start)) {
-               return false;
-           }
-           if ($end && $date->gt($end)) {
-               return false;
-           }
-           return true;
-       }
 }
