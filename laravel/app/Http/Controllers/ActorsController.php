@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Showtimes;
+use App\Models\Actors;
 use Illuminate\Http\Request;
 
-class ShowtimesController extends Controller
+class ActorsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class ShowtimesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Showtimes $showtimes)
+    public function show(Actors $actors)
     {
         //
     }
@@ -42,7 +42,7 @@ class ShowtimesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Showtimes $showtimes)
+    public function edit(Actors $actors)
     {
         //
     }
@@ -50,7 +50,7 @@ class ShowtimesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Showtimes $showtimes)
+    public function update(Request $request, Actors $actors)
     {
         //
     }
@@ -58,7 +58,7 @@ class ShowtimesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Showtimes $showtimes)
+    public function destroy(Actors $actors)
     {
         //
     }

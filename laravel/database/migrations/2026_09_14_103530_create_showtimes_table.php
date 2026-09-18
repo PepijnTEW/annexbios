@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('showtimes', function (Blueprint $table) {
             $table->id('showtime_id');
-            $table->foreignId('cinema_id')
-                ->constrained('cinemas', 'cinema_id')
-                ->onDelete('cascade');
             $table->foreignId('movie_id')
                 ->constrained('movies', 'movie_id')
-                ->onDelete('cascade');
-            $table->date('date');
-            $table->time('time');
+                ->cascadeOnDelete();
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
             $table->timestamps();
+
+            $table->index(['start_time', 'end_time']);
+            $table->index(['movie_id', 'start_time']);
         });
     }
 

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Genre extends Model
 {
@@ -15,17 +15,17 @@ class Genre extends Model
     protected $primaryKey = 'genre_id';
 
     // We will be using the ids of tmdb so we dont have to convert them
-    protected $incrementing = false;
+    public $incrementing = false;
 
     protected $fillable = [
         'genre_name',
     ];
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Genre, \App\Models\MovieGenre>
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Movie, \App\Models\Genre>
     */
-    public function movieGenre(): HasMany
+    public function movieGenre(): BelongsToMany
     {
-        return $this->hasMany(MovieGenre::class);
+        return $this->belongsToMany(Movie::class, 'movie_genres', 'genre_id', 'movie_id');
     }
 }
