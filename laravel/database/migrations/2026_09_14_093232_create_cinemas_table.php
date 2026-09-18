@@ -16,6 +16,12 @@ return new class extends Migration
             $table->text('cinema_name');
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('cinema_id')
+                ->constrained('cinemas', 'cinema_id')
+                ->onDelete('cascade');
+        });
     }
 
     /**

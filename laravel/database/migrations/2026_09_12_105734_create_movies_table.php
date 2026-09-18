@@ -19,8 +19,10 @@ return new class extends Migration
             $table->text('language')->default('en');
             $table->decimal('imd_rating', 4, 3)->nullable();
             $table->text('poster_path')->nullable();
-            $table->text('runtime');
+            $table->unsignedInteger('runtime');
             $table->boolean('active')->default(false);
+            $table->date('run_start_at')->nullable()->after('active');
+            $table->date('run_end_at')->nullable()->after('run_start_at');
             $table->timestamps();
         });
     }

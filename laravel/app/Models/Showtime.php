@@ -20,13 +20,13 @@ class Showtime extends Model
     protected $fillable = [
         'showroom_id',
         'movie_id',
-        'date',
         'start_time',
         'end_time',
     ];
 
     protected $casts = [
-        'date' => 'date',
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
     ];
 
     /**

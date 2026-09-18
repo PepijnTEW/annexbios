@@ -16,6 +16,12 @@ return new class extends Migration
             $table->text('name');
             $table->timestamps();
         });
+
+        Schema::table('casts', function (Blueprint $table) {
+            $table->foreignId('actor_id')
+                ->constrained('actors', 'actor_id')
+                ->cascadeOnDelete();
+        });
     }
 
     /**

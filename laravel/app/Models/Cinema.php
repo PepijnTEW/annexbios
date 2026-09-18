@@ -28,10 +28,10 @@ class Cinema extends Model
     }
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Showtime, \App\Models\Cinema>
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Showroom, \App\Models\Cinema>
     */
-    public function showtimes(): HasMany
+    public function rooms(): HasMany
     {
-       return $this->hasMany(Showtime::class);
+        return $this->hasMany(Showroom::class, 'cinema_id', 'cinema_id');
     }
 }
