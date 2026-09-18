@@ -20,6 +20,10 @@ class Showtime extends Model
     protected $fillable = [
         'showroom_id',
         'movie_id',
+<<<<<<< HEAD
+=======
+        'date',
+>>>>>>> 4000ba8 (rebase done)
         'start_time',
         'end_time',
     ];
@@ -30,6 +34,7 @@ class Showtime extends Model
     ];
 
     /**
+<<<<<<< HEAD
 <<<<<<< HEAD:laravel/app/Models/Showtime.php
          * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Showroom, \App\Models\Showtime>
     */
@@ -39,6 +44,17 @@ class Showtime extends Model
      */
     public function cinema(): BelongsTo
 >>>>>>> 2e817ab (create showtimes test data):laravel/app/Models/Showtimes.php
+=======
+<<<<<<< HEAD:laravel/app/Models/Showtimes.php
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showtime>
+     */
+    public function cinema(): BelongsTo
+=======
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Showroom, \App\Models\Showtime>
+    */
+    public function showroom(): BelongsTo
+>>>>>>> 85227d5 (fixed issues with database and logic for movies):laravel/app/Models/Showtime.php
+>>>>>>> 4000ba8 (rebase done)
     {
         return $this->belongsTo(Showroom::class, 'showroom_id', 'showroom_id');
     }
