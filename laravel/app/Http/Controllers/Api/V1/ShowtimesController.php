@@ -19,7 +19,9 @@ class ShowtimesController extends Controller
         $filter = new ShowtimesFilter();
         $filterItems = $filter->transform($request);
 
-        $showtimes = Showtimes::where($filterItems);
+        $showtimes = Showtimes::with('movie')
+            ->where($filterItems)
+            ->where('cinema_id', $request->user()->cinema_id);
 
         return new ShowtimesCollection($showtimes->paginate()->appends($request->query()));
     }
