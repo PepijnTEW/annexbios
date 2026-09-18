@@ -21,7 +21,8 @@ class ShowtimesResource extends JsonResource
             'date' => $this->date,
             'time' => $this->time,
             'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at
+            'updatedAt' => $this->updated_at,
+            'movie' => new MovieResource($this->movie)
         ];
     }
 }
