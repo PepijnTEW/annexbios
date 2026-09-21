@@ -14,7 +14,6 @@ class CinemaSeeder extends Seeder
     public function run(): void
     {
         $cinemas = [
-            'Hoofdkantoor',
             'Leerdam',
             'Maarssen',
             'Breukelen',
@@ -47,5 +46,28 @@ class CinemaSeeder extends Seeder
 
             $this->command->info("$city token: $token");
         }
+
+        $hoofdkantoor = Cinema::create([
+            'cinema_name' => "Annex Bios Hoofdkantoor",
+        ]);
+
+        $hoofdkantoorUser = User::create([
+            'name' => "Annex Bios Hoofdkantoor",
+            'email' => "hoofdkantoor@annexbios.nl",
+            'password' => Hash::make('password'),
+            'cinema_id' => $hoofdkantoor->cinema_id,
+        ]);
+
+        $token = $hoofdkantoorUser->createToken(
+            'hoofdkantoor-api-token',
+            [
+                'movies:read',
+                'showtimes:read',
+                'movies:create',
+                'showtimes:create'
+            ]
+        )->plainTextToken;
+
+        $this->command->info("Hoofdkantoor token: $token");
     }
 }

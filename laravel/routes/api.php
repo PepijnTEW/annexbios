@@ -12,7 +12,7 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'middleware' => 'auth:sanctum'], function () {
     Route::apiResource('movies', MovieController::class) // api/v1/movies
-        // ->only(['index', 'show'])
+        ->only(['index', 'show'])
         ->middleware('ability:movies:read');
     Route::apiResource('showtimes', ShowtimesController::class) // api/v1/showtimes
         ->only(['index', 'show'])
@@ -20,4 +20,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
     Route::apiResource('cinemas', CinemaController::class) // api/v1/cinemas
         ->only(['index', 'show'])
         ->middleware('ability:cinemas:read');
+
+    // POST routes for HQ
+    Route::apiResource('movies', MovieController::class)
+        ->only(['store'])
+        ->middleware('ability:movies:create');
 });

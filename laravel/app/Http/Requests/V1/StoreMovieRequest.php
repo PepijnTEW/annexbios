@@ -13,7 +13,7 @@ class StoreMovieRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; //HAS TO BE FALS BUT IM TESTING
+        return $this->user()->tokenCan('movies:create');
     }
 
     /**
