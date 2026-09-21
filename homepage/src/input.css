@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@source "../index.php";
+@import "@fontsource/lato/400.css";
+@import "@fontsource/lato/700.css";
+
+body {
+    background-color: black;
+    font-family: 'Lato', sans-serif;
+}
+
+.locaties {
+    @apply rounded-sm bg-blue-500 m-1;
+    width: 20vw;
+    height: 15vw;
+}
+
+.headLinks{
+    @apply m-2 text-2xl;
+}
+
+.films{
+    @apply h-[22vw] w-[15vw] bg-violet-400;
+}
