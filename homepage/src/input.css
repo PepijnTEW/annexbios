@@ -19,5 +19,11 @@ body {
 }
 
 .films{
-    @apply h-[22vw] w-[15vw] bg-violet-400;
+    @apply h-[22vw] bg-violet-400;
+}
+
+@layer components {
+  .page-container {
+    @apply max-w-7xl mx-auto px-4;
+  }
 }

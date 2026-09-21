@@ -42,7 +42,7 @@
             <!-- welkoms bericht -->
             <div class="flex justify-center">
                 <div class="h-65 w-[90vw] my-10 bg-black my-20">
-                    <h1 class="text-6xl text-[#faf9f5] m-3">Welkom bij Anox Bios</h1>
+                    <h1 class="text-6xl text-[#faf9f5] m-3">Welkom bij Annex Bios</h1>
                     <p class="text-[#faf9f5] m-5 text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Necessitatibus inventore ea cum placeat maxime, doloribus deserunt vitae dolore aliquid nostrum
                         repellendus mollitia similique omnis repellat labore ratione, doloremque, ipsam deleniti?</p>
@@ -50,8 +50,8 @@
             </div>
 
             <!-- locaties met afbeelding -->
-            <div class="flex justify-center">
-                <div class="inline-grid grid-cols-1 sm:grid-cols-4 mx-2 gap-2 my-10">
+            <div class="page-container">
+                <div class="grid grid-cols-1 sm:grid-cols-4 mx-2 gap-2 my-10">
                     <div class="locaties"></div>
                     <div class="locaties"></div>
                     <div class="locaties"></div>
@@ -64,8 +64,8 @@
             </div>
             <!-- aanbevolen films -->
             <p class="text-6xl text-[#faf9f5] mx-55 mt-30">aanbevolen films</p>
-            <div class="flex justify-center">
-                <div class="inline-grid grid-cols-1 sm:grid-cols-6 mx-2 gap-1 my-10">
+            <div class="page-container">
+                <div class="grid grid-cols-1 sm:grid-cols-6 mx-2 gap-1 my-10">
                     <div class="films"></div>
                     <div class="films"></div>
                     <div class="films"></div>
@@ -74,8 +74,40 @@
                     <div class="films"></div>
                 </div>
             </div>
+            <!-- nieuws berichten -->
+            <p class="text-6xl text-[#faf9f5] mx-55 mt-30">Nieuws</p>
+            <div class="page-container">
+                <div class="grid grid-cols-1 sm:grid-cols-2 mx-2 gap-2 my-10">
+                    <div class="rounded-sm bg-blue-500 m-1 h-[20vw]"></div>
+                    <div class="rounded-sm bg-blue-500 m-1 h-[20vw]"></div>
+                    <div class="rounded-sm bg-blue-500 col-span-2 m-1 h-[20vw]"></div>
+                </div>
+            </div>
 
+            <footer
+                class="flex flex-col sm:flex-row h-auto sm:h-64 w-full gap-4 border-2 bg-[#666666] mt-10 items-center justify-start py-4">
+                <div class="mx-2">
+                    <div>
+                        <p></p>
+                    </div>
+                    <p>hello</p>
+                    <p>hello</p>
+                    <p>hello</p>
+                </div>
+                <div class="">
+                    <p>hello</p>
+                    <p>hello</p>
+                    <p>hello</p>
+                </div>
+            </footer>
 
+                <!-- links voowaarden enzv -->
+                <div class="flex m-2">
+                    <a class="text-white mx-1" href="#">voorwaarden |</a>
+                    <a class="text-white mx-1" href="#">privacy beleid |</a>
+                    <a class="text-white mx-1" href="#">cookie disclaimer |</a>
+                    
+                </div>
         </div>
 </body>
 
