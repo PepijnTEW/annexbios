@@ -21,7 +21,7 @@ class Movie extends Model
         'description',
         'release_date',
         'language',
-        'imdb_rating',
+        'imd_rating',
         'poster_path',
         'active',
     ];
