@@ -4,7 +4,6 @@ import MoviesPlaying from "./components/jsx/MoviesPlaying.jsx";
 import RunTimes from "./components/jsx/RunTimes.jsx";
 import { useState, useEffect } from "react";
 
-import ReactDOM from "react-dom/client";
 import "./index.css";
 
 const App = () => {

@@ -3,15 +3,17 @@
 namespace Database\Factories;
 
 use App\Models\Movie;
-use App\Models\Cinema;
-use App\Models\Showtimes;
+use App\Models\Showroom;
+use App\Models\Showtime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Showtimes>
+ * @extends Factory<Showtime>
  */
-class ShowtimesFactory extends Factory
+class ShowtimeFactory extends Factory
 {
+    protected $model = Showtime::class;
+
     /**
      * Define the model's default state.
      *
@@ -20,10 +22,10 @@ class ShowtimesFactory extends Factory
     public function definition(): array
     {
         return [
-            'cinema_id' => Cinema::inRandomOrder()->value('cinema_id'),
+            'showroom_id' => Showroom::inRandomOrder()->value('showroom_id'),
             'movie_id' => Movie::inRandomOrder()->value('movie_id'),
-            'date' => $this->faker->dateTimeBetween('now', '+30 days')->format('Y-m-d'),
-            'time' => $this->faker->time('H:i:s')
+            'start_time' => $this->faker->dateTime('H:i:s'),
+            'end_time' => $this->faker->dateTime('H:i:s')
         ];
     }
 }

@@ -2,16 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\Cinema;
+use App\Models\Genre;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends Factory<Cinema>
+ * @extends Factory<Genre>
  */
-class CinemaFactory extends Factory
+class GenreFactory extends Factory
 {
-    protected $model = Cinema::class;
+    protected $model = Genre::class;
     /**
      * Define the model's default state.
      *
@@ -20,8 +19,8 @@ class CinemaFactory extends Factory
     public function definition(): array
     {
         return [
-            'cinema_name' => fake()->name(),
-            'auth_key' => Str::random(10),
+            'genre_id' => fake()->unique()->numberBetween(100, 999),
+            'genre_name' => fake()->name(),
         ];
     }
 }

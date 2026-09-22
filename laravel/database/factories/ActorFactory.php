@@ -2,16 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\Cinema;
+use App\Models\Actor;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends Factory<Cinema>
+ * @extends Factory<Actor>
  */
-class CinemaFactory extends Factory
+class ActorFactory extends Factory
 {
-    protected $model = Cinema::class;
+    protected $model = Actor::class;
     /**
      * Define the model's default state.
      *
@@ -20,8 +19,8 @@ class CinemaFactory extends Factory
     public function definition(): array
     {
         return [
-            'cinema_name' => fake()->name(),
-            'auth_key' => Str::random(10),
+            'actor_id' => fake()->unique()->randomNumber(5),
+            'name' => fake()->name(),
         ];
     }
 }
