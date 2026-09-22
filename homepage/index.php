@@ -14,8 +14,8 @@
         <!-- achtergrond theater afbeelding -->
         <div class="h-[90vw] w-full bg-red-500 ">
             <header
-                class="sticky top-0 z-0 flex flex-col sm:flex-row h-auto sm:h-64 w-full gap-4 border-2 bg-[#faf9f5] mt-10 items-center justify-between py-4">
-                <img src="assets/locaties.png" alt="Annex Bios" class="h-40 w-auto shrink-0 object-contain">
+                class="sticky top-0 z-0 flex flex-col sm:flex-row h-auto sm:h-64 w-full gap-4 bg-white mt-10 items-center justify-between py-4">
+                <img src="assets/afbeeldingen/logo.png" alt="Annex Bios" class="h-40 w-auto shrink-0 object-contain">
                 <div class="flex gap-4">
                     <a href="#" class="headLinks">vestigingen</a>
                     <a href="#" class="headLinks">aanbevolen films</a>
@@ -24,13 +24,15 @@
             </header>
 
             <nav
-                class="sticky top-auto sm:top-64 flex h-24 w-full gap-4 border-2 bg-[#716d6d] mb-10 items-center justify-start">
+                class="sticky top-auto sm:top-64 flex h-24 w-full gap-4 bg-[#716d6d] mb-10 items-center justify-start">
                 <p class="bold font-bold mx-5 text-[#faf9f5] text-sm sm:text-base md:text-lg lg:text-[1.5vw]">kies een
                     vestiging & koop je tickets!</p>
                 <div class="relative">
-                    <button class="bg-white border-2 rounded-md w-[10vw] h-[2vw] text-[15px] font-bold"
+                    <button
+                        class="bg-white border-2 rounded-md px-4 py-2 text-sm sm:text-base font-bold whitespace-nowrap"
                         onclick="document.getElementById('vestigingen').classList.toggle('hidden')">kies je
-                        vestiging</button>
+                        vestiging
+                    </button>
                     <div id="vestigingen" class="hidden absolute flex flex-col bg-white shadow-lg rounded-md p-2 gap-1">
                         <a class="w-[10vw] h-[2vw] text-center" href="#">leerdam</a>
                         <a class="w-[10vw] h-[2vw] text-center" href="#">maarsen</a>
@@ -52,14 +54,86 @@
             <!-- locaties met afbeelding -->
             <div class="page-container">
                 <div class="grid grid-cols-1 sm:grid-cols-4 mx-2 gap-2 my-10">
-                    <div class="locaties"></div>
-                    <div class="locaties"></div>
-                    <div class="locaties"></div>
-                    <div class="locaties"></div>
-                    <div class="locaties"></div>
-                    <div class="locaties"></div>
-                    <div class="locaties"></div>
-                    <div class="locaties"></div>
+                    <div class="locaties">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Leerdam</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                        <a href="#"
+                            class="bg-[#B97D46] text-white text-center font-bold text-[1.2vw] px-4 py-2 m-2 whitespace-nowrap w-[11vw]">
+                            bezoek website
+                        </a>
+                    </div>
+                    <div class="locaties">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Maarssen</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                        <a href="#"
+                            class="bg-[#9E2629] text-white text-center font-bold text-[1.2vw] px-4 py-2 m-2 whitespace-nowrap w-[11vw]">
+                            bezoek website
+                        </a>
+                    </div>
+                    <div class="locaties">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Breukelen</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                        <a href="#"
+                            class="bg-[#8B9E51] text-white text-center font-bold text-[1.2vw] px-4 py-2 m-2 whitespace-nowrap w-[11vw]">
+                            bezoek website
+                        </a>
+                    </div>
+                    <div class="locaties">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Bilthoven</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                        <a href="#"
+                            class="bg-[#6E4F7D] text-white text-center font-bold text-[1.2vw] px-4 py-2 m-2 whitespace-nowrap w-[11vw]">
+                            bezoek website
+                        </a>
+                    </div>
+                    <div class="locaties">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Montfoort</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                        <a href="#"
+                            class="bg-[#4596BA] text-white text-center font-bold text-[1.2vw] px-4 py-2 m-2 whitespace-nowrap w-[11vw]">
+                            bezoek website
+                        </a>
+                    </div>
+                    <div class="locaties">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Woerden</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                        <a href="#"
+                            class="bg-[#FF2525] text-white text-center font-bold text-[1.2vw] px-4 py-2 m-2 whitespace-nowrap w-[11vw]">
+                            bezoek website
+                        </a>
+                    </div>
+                    <div class="locaties">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Leidscherijn</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                        <a href="#"
+                            class="bg-[#399CFF] text-white text-center font-bold text-[1.2vw] px-4 py-2 m-2 whitespace-nowrap w-[11vw]">
+                            bezoek website
+                        </a>
+                    </div>
+                    <div class="locaties">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Zeist</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                        <a href="#"
+                            class="bg-[#269617] text-white text-center font-bold text-[1.2vw] px-4 py-2 m-2 whitespace-nowrap w-[11vw]">
+                            bezoek website
+                        </a>
+                    </div>
                 </div>
             </div>
             <!-- aanbevolen films -->
@@ -78,9 +152,24 @@
             <p class="text-6xl text-[#faf9f5] mx-55 mt-30">Nieuws</p>
             <div class="page-container">
                 <div class="grid grid-cols-1 sm:grid-cols-2 mx-2 gap-2 my-10">
-                    <div class="rounded-sm bg-blue-500 m-1 h-[20vw]"></div>
-                    <div class="rounded-sm bg-blue-500 m-1 h-[20vw]"></div>
-                    <div class="rounded-sm bg-blue-500 col-span-2 m-1 h-[20vw]"></div>
+                    <div class="rounded-sm bg-white m-1 h-[20vw]">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Breukelen</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                    </div>
+                    <div class="rounded-sm bg-white m-1 h-[20vw]">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Breukelen</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                    </div>
+                    <div class="rounded-sm bg-white col-span-2 m-1 h-[20vw]">
+                        <img src="assets/afbeeldingen/locaties.jpg" alt="locatie"
+                            class="w-full h-[11vw] object-cover rounded-sm">
+                        <p class="px-2 pt-2 text-sm">Breukelen</p>
+                        <p class="px-2 pb-2 text-[0.8vw]">Rijksstraatweg 42, 3223 KA</p>
+                    </div>
                 </div>
             </div>
 
@@ -101,13 +190,13 @@
                 </div>
             </footer>
 
-                <!-- links voowaarden enzv -->
-                <div class="flex m-2">
-                    <a class="text-white mx-1" href="#">voorwaarden |</a>
-                    <a class="text-white mx-1" href="#">privacy beleid |</a>
-                    <a class="text-white mx-1" href="#">cookie disclaimer |</a>
-                    
-                </div>
+            <!-- links voowaarden enzv -->
+            <div class="flex m-2">
+                <a class="text-white mx-1" href="#">voorwaarden |</a>
+                <a class="text-white mx-1" href="#">privacy beleid |</a>
+                <a class="text-white mx-1" href="#">cookie disclaimer |</a>
+
+            </div>
         </div>
 </body>
 

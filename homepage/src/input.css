@@ -9,9 +9,8 @@ body {
 }
 
 .locaties {
-    @apply rounded-sm bg-blue-500 m-1;
+    @apply rounded-sm bg-white m-1 flex flex-col items-start;
     width: 20vw;
-    height: 15vw;
 }
 
 .headLinks{
