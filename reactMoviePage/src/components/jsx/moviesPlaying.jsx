@@ -6,12 +6,13 @@ const MoviesPlaying = () => {
   const [conformSaveModal, setConformSaveModal] = useState(false);
   const [updatedMovies, setUpdatedMovies] = useState([]);
   const [activeMovies, setActiveMovies] = useState([
+    // hier moet de film data worden ingeladen
     { title: "fightclub", id: 101, active: true },
     { title: "hailmary", id: 100, active: true },
     { title: "thematrix", id: 102, active: true },
   ]);
+  const [showRunTimes, setShowRunTimes] = useState(true);
 
-  // Bepaalt of het vinkje op het scherm AAN of UIT staat
   const isMovieChecked = (movie) => {
     const changedMovie = updatedMovies.find((m) => m.id === movie.id);
     return changedMovie ? changedMovie.active : movie.active;
@@ -34,17 +35,17 @@ const MoviesPlaying = () => {
 
   return (
     <>
-      <h2 id="movies-playing">Movies playing</h2>
       <div className="app">
+        <h2 id="movies-playing">Draaiende films</h2>
+
         <div className="PMcontainer">
           <div className="PMcard">
-            <div className="PMtitle">Movie Title</div>
-            <div className="PMid">Movie ID</div>
+            <div className="PMtitle">Titel</div>
+            <div className="PMid">Film ID</div>
             <p>enabled</p>
           </div>
           <div className="PMrowBorder"></div>
 
-          {/* Map door activeMovies met Fragment om de CSS-grid niet te breken */}
           {activeMovies.map((movie) => (
             <React.Fragment key={movie.id}>
               <div className="PMcard">
