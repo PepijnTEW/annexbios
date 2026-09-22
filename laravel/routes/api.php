@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\V1\MovieController;
 use App\Http\Controllers\Api\V1\CinemaController;
-use App\Http\Controllers\Api\V1\ShowtimesController;
+use App\Http\Controllers\Api\V1\ShowtimeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +14,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
     Route::apiResource('movies', MovieController::class) // GET api/v1/movies
         ->only(['index', 'show'])
         ->middleware('ability:movies:read');
-    Route::apiResource('showtimes', ShowtimesController::class) // GET api/v1/showtimes
+    Route::apiResource('showtimes', ShowtimeController::class) // GET api/v1/showtimes
         ->only(['index', 'show'])
         ->middleware('ability:showtimes:read');
     Route::apiResource('cinemas', CinemaController::class) // GET api/v1/cinemas
@@ -25,7 +25,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
     Route::apiResource('movies', MovieController::class) // POST api/v1/movies
         ->only(['store'])
         ->middleware('ability:movies:create');
-    Route::apiResource('showtimes', ShowtimesController::class) // POST api/v1/showtimes
+    Route::apiResource('showtimes', ShowtimeController::class) // POST api/v1/showtimes
         ->only(['store'])
         ->middleware('ability:showtimes:create');
 });

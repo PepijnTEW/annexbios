@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\ShowtimesFilter;
-use App\Models\Showtimes;
+use App\Models\Showtime;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreShowtimeRequest;
 use App\Http\Resources\V1\ShowtimesCollection;
 use App\Http\Resources\V1\ShowtimesResource;
 use Illuminate\Http\Request;
 
-class ShowtimesController extends Controller
+class ShowtimeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +20,11 @@ class ShowtimesController extends Controller
         $filter = new ShowtimesFilter();
         $filterItems = $filter->transform($request);
 
-        $showtimes = Showtimes::with('movie')
+        $showtimes = Showtime::with(['movie', 'showroom'])
             ->where($filterItems)
-            ->where('cinema_id', $request->user()->cinema_id);
+            ->whereHas('showroom', function ($query) use ($request) {
+                $query->where('cinema_id', $request->user()->cinema_id);
+            });
 
         return new ShowtimesCollection($showtimes->paginate()->appends($request->query()));
     }
@@ -37,15 +40,15 @@ class ShowtimesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreShowtimeRequest $request)
     {
-        //
+        return new ShowtimesResource(Showtime::create($request->validated()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Showtimes $showtimes)
+    public function show(Showtime $showtimes)
     {
         return new ShowtimesResource($showtimes);
     }
@@ -53,7 +56,7 @@ class ShowtimesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Showtimes $showtimes)
+    public function edit(Showtime $showtimes)
     {
         //
     }
@@ -61,7 +64,7 @@ class ShowtimesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Showtimes $showtimes)
+    public function update(Request $request, Showtime $showtimes)
     {
         //
     }
@@ -69,7 +72,7 @@ class ShowtimesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Showtimes $showtimes)
+    public function destroy(Showtime $showtimes)
     {
         //
     }
