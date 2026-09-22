@@ -25,6 +25,7 @@ class MovieFactory extends Factory
             'imd_rating' => fake()->randomFloat(3, 1, 10),
             'poster_path' => fake()->optional()->imageUrl(),
             'active' => fake()->boolean(),
+            'runtime' => fake()->randomDigitNotNull()
         ];
     }
 }

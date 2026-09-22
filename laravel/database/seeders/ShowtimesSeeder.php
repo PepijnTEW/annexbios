@@ -2,15 +2,24 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cinema;
+use App\Models\Showroom;
+use App\Models\Showtime;
 use Illuminate\Database\Seeder;
-use App\Models\Showtimes;
 
 class ShowtimesSeeder extends Seeder
 {
-
-
     public function run(): void
     {
-        Showtimes::factory()->count(20)->create();
+        foreach (Cinema::all() as $cinema) {
+            foreach (['Screen 1', 'Screen 2', 'Screen 3'] as $screenName) {
+                Showroom::firstOrCreate([
+                    'cinema_id' => $cinema->cinema_id,
+                    'showroom_name' => $screenName,
+                ]);
+            }
+        }
+
+        Showtime::factory()->count(20)->create();
     }
 }

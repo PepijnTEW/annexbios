@@ -20,18 +20,18 @@ class Showtime extends Model
     protected $fillable = [
         'showroom_id',
         'movie_id',
-        'date',
         'start_time',
         'end_time',
     ];
 
     protected $casts = [
-        'date' => 'date',
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
     ];
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Showroom, \App\Models\Showtime>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Showroom, \App\Models\Showtime>
+     */
     public function showroom(): BelongsTo
     {
         return $this->belongsTo(Showroom::class, 'showroom_id', 'showroom_id');
