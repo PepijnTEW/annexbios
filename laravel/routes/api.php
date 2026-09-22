@@ -11,18 +11,21 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'middleware' => 'auth:sanctum'], function () {
-    Route::apiResource('movies', MovieController::class) // api/v1/movies
+    Route::apiResource('movies', MovieController::class) // GET api/v1/movies
         ->only(['index', 'show'])
         ->middleware('ability:movies:read');
-    Route::apiResource('showtimes', ShowtimesController::class) // api/v1/showtimes
+    Route::apiResource('showtimes', ShowtimesController::class) // GET api/v1/showtimes
         ->only(['index', 'show'])
         ->middleware('ability:showtimes:read');
-    Route::apiResource('cinemas', CinemaController::class) // api/v1/cinemas
+    Route::apiResource('cinemas', CinemaController::class) // GET api/v1/cinemas
         ->only(['index', 'show'])
         ->middleware('ability:cinemas:read');
 
     // POST routes for HQ
-    Route::apiResource('movies', MovieController::class)
+    Route::apiResource('movies', MovieController::class) // POST api/v1/movies
         ->only(['store'])
         ->middleware('ability:movies:create');
+    Route::apiResource('showtimes', ShowtimesController::class) // POST api/v1/showtimes
+        ->only(['store'])
+        ->middleware('ability:showtimes:create');
 });
