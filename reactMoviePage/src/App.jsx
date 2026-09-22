@@ -12,19 +12,19 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPage, setShowLoginPage] = useState(false);
   const [showMoviePage, setShowMoviePage] = useState(false);
-  const [moviesPlayingPage, setMoviesPlayingPage] = useState(true);
-  const [runTimesPage, setrunTimesPage] = useState(true);
+  const [moviesPlayingPage, setMoviesPlayingPage] = useState(false);
+  const [runTimesPage, setrunTimesPage] = useState(false);
 
   useEffect(() => {
-    // checklogin();
+    checklogin();
   });
-  //   const checklogin = () => {
-  //     if (isLoggedIn === true) {
-  //       setShowMoviePage(true);
-  //     } else {
-  //       setShowLoginPage(true);
-  //     }
-  //   };
+  const checklogin = () => {
+    if (isLoggedIn === true) {
+      setShowMoviePage(true);
+    } else {
+      setShowLoginPage(true);
+    }
+  };
   return (
     <>
       <h1>Anex Bios</h1>
