@@ -21,10 +21,18 @@ class Cinema extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\User, \App\Models\Cinema>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\User, \App\Models\Cinema>
      */
     public function users(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'cinema_id', 'cinema_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\Showroom, \App\Models\Cinema>
+     */
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Showroom::class, 'cinema_id', 'cinema_id');
     }
 }

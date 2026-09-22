@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Showtimes extends Model
+class Showtime extends Model
 {
     use HasFactory;
 
@@ -18,10 +18,11 @@ class Showtimes extends Model
     public $incrementing = true;
 
     protected $fillable = [
-        'cinema_id',
+        'showroom_id',
         'movie_id',
         'date',
-        'time',
+        'start_time',
+        'end_time',
     ];
 
     protected $casts = [
@@ -29,11 +30,11 @@ class Showtimes extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showtime>
-     */
-    public function cinema(): BelongsTo
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Showroom, \App\Models\Showtime>
+    */
+    public function showroom(): BelongsTo
     {
-        return $this->belongsTo(Cinema::class, 'cinema_id', 'cinema_id');
+        return $this->belongsTo(Showroom::class, 'showroom_id', 'showroom_id');
     }
 
     /**

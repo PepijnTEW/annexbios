@@ -25,6 +25,7 @@ body {
   padding: 2rem;
   background-color: #1f2123;
   color: #f9d3b4;
+  box-shadow: 10px 10px black;
 }
 
 .app {
@@ -39,14 +40,10 @@ body {
 h1 {
   font-size: 3rem;
   letter-spacing: 0.9px;
-  background: linear-gradient(
-    90deg,
-    rgba(249, 211, 180, 1) 0%,
-    rgba(249, 211, 180, 0) 100%
-  );
+  color: #f9d3b4;
   background-clip: text;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
   width: 100vw;
   text-align: center;
 }
