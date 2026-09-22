@@ -14,7 +14,7 @@ class Showroom extends Model
     protected $table = 'showrooms';
 
     //Sets primary key
-    protected $primaryKey = 'showtime_id';
+    protected $primaryKey = 'showroom_id';
     public $incrementing = true;
 
     protected $fillable = [

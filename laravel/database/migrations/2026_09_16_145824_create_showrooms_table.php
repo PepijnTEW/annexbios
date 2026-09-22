@@ -18,7 +18,6 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->text('showroom_name');
             $table->timestamps();
-            $table->index('cinema_id');
         });
 
         Schema::table('showtimes', function (Blueprint $table) {
