@@ -11,8 +11,8 @@ const MoviesPlaying = () => {
     { title: "hailmary", id: 100, active: true },
     { title: "thematrix", id: 102, active: true },
   ]);
+  const [showRunTimes, setShowRunTimes] = useState(true);
 
-  // Bepaalt of het vinkje op het scherm AAN of UIT staat
   const isMovieChecked = (movie) => {
     const changedMovie = updatedMovies.find((m) => m.id === movie.id);
     return changedMovie ? changedMovie.active : movie.active;

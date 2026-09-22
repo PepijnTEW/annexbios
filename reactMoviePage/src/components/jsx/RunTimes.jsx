@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "../css/runTimes.css";
+import { Modal } from "@mui/material";
 
 const RunTimes = () => {
+  const [addMovieMedal, setAddMovieMedal] = useState(false);
   const [runTimeMovies, setRunTimeMovies] = useState([
     {
       title: "Hail mary",
@@ -10,6 +12,7 @@ const RunTimes = () => {
       time: "22:00",
       location: "Amersfoort",
       room: 2,
+      duration: "01:03",
     },
     {
       title: "fightclub",
@@ -18,6 +21,7 @@ const RunTimes = () => {
       time: "20:00",
       location: "Utrecht",
       room: 1,
+      duration: "01:50",
     },
   ]);
   return (
@@ -33,6 +37,7 @@ const RunTimes = () => {
             <div className="RTtime">Tijd</div>
             <div className="RTlocation">Vesteging</div>
             <div className="RTroom">Zaal</div>
+            <div className="RTduration">Duur</div>
           </div>
           <div className="RTrowBorder"></div>
           {runTimeMovies.map((movie) => (
@@ -44,6 +49,7 @@ const RunTimes = () => {
                 <div className="RTtime">{movie.time}</div>
                 <div className="RTlocation">{movie.location}</div>
                 <div className="RTroom">{movie.room}</div>
+                <div className="RTduration">{movie.duration}</div>
               </div>
               <div className="RTrowBorder"></div>
             </React.Fragment>
