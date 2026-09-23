@@ -25,7 +25,7 @@ class MovieResource extends JsonResource
             'active' => $this->active,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
-            'cast' => new CastResource($this->cast)
+            'actors' => ActorResource::collection($this->actors)
         ];
     }
 }

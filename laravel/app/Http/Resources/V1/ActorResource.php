@@ -15,7 +15,10 @@ class ActorResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->name
+            'actorId' => $this->actor_id,
+            'name' => $this->name,
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
         ];
     }
 }
