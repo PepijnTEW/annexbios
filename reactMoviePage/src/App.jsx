@@ -1,7 +1,8 @@
 import LoginPage from "./components/jsx/Login.jsx";
 import Movie from "./components/jsx/Movie.jsx";
-import MoviesPlaying from "./components/jsx/MoviesPlaying.jsx";
-import RunTimes from "./components/jsx/RunTimes.jsx";
+import MoviesPlaying from "./components/jsx/moviesPlaying.jsx";
+import RunTimes from "./components/jsx/runTimes.jsx";
+import AddMovie from "./components/jsx/addMovie.jsx";
 import { useState, useEffect } from "react";
 
 import ReactDOM from "react-dom/client";
@@ -14,9 +15,10 @@ const App = () => {
   const [showMoviePage, setShowMoviePage] = useState(false);
   const [moviesPlayingPage, setMoviesPlayingPage] = useState(false);
   const [runTimesPage, setrunTimesPage] = useState(false);
+  const [showAddmovie, setShowAddmovie] = useState(true);
 
   useEffect(() => {
-    checklogin();
+    // checklogin();
   });
   const checklogin = () => {
     if (isLoggedIn === true) {
@@ -32,6 +34,7 @@ const App = () => {
       {showMoviePage && <Movie />}
       {moviesPlayingPage && <MoviesPlaying />}
       {runTimesPage && <RunTimes />}
+      {showAddmovie && <AddMovie />}
     </>
   );
 };
