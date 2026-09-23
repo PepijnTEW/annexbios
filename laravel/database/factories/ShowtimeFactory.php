@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ShowtimeFactory extends Factory
 {
+    protected $model = Showtime::class;
     /**
      * Define the model's default state.
      *

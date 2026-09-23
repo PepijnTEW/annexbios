@@ -18,6 +18,7 @@ class Genre extends Model
     public $incrementing = false;
 
     protected $fillable = [
+        'genre_id',
         'genre_name',
     ];
 
