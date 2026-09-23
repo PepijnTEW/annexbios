@@ -3,6 +3,7 @@ import Movie from "./components/jsx/Movie.jsx";
 import MoviesPlaying from "./components/jsx/moviesPlaying.jsx";
 import RunTimes from "./components/jsx/runTimes.jsx";
 import AddMovie from "./components/jsx/addMovie.jsx";
+import Navbar from "./components/jsx/navbar.jsx";
 import { useState, useEffect } from "react";
 
 import ReactDOM from "react-dom/client";
@@ -28,14 +29,18 @@ const App = () => {
     }
   };
   return (
-    <>
-      <h1>Anex Bios</h1>
-      {showLoginPage && <LoginPage />}
-      {showMoviePage && <Movie />}
-      {moviesPlayingPage && <MoviesPlaying />}
-      {runTimesPage && <RunTimes />}
-      {showAddmovie && <AddMovie />}
-    </>
+    <div className="pageLayout">
+      <Navbar />
+
+      <main className="pageContent">
+        <h1>Anex Bios</h1>
+        {showLoginPage && <LoginPage />}
+        {showMoviePage && <Movie />}
+        {moviesPlayingPage && <MoviesPlaying />}
+        {runTimesPage && <RunTimes />}
+        {showAddmovie && <AddMovie />}
+      </main>
+    </div>
   );
 };
 export default App;
