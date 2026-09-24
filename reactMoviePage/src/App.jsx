@@ -11,17 +11,18 @@ import "./index.css";
 
 const App = () => {
   // comment the checklogin function and put true in the usestate below to test certain pages
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [activePage, setActivePage] = useState("Home");
 
   useEffect(() => {
-    // checklogin();
+    checklogin();
   }, [isLoggedIn]);
   const checklogin = () => {
     if (isLoggedIn === true) {
       setActivePage("Home");
+      setIsLoggedIn(true);
     } else {
-      setActivePage("Login");
+      setActivePage("loginPage");
     }
   };
   return (
@@ -30,7 +31,7 @@ const App = () => {
 
       <main className="pageContent">
         <h1>Anex Bios</h1>
-        {activePage === "LoginPage" && <LoginPage />}
+        {activePage === "loginPage" && <LoginPage />}
         {activePage === "Home" && <Movie />}
         {activePage === "Films" && <MoviesPlaying />}
         {activePage === "Showtimes" && <RunTimes />}
