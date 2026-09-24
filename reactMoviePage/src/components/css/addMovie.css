@@ -111,3 +111,11 @@ h2 {
 .confirmationValue {
   font-weight: 600;
 }
+.sendButton {
+  background-color: antiquewhite;
+  border-radius: 2px;
+  transition-duration: 0.3s;
+}
+.sendButton:hover {
+  background-color: rgb(247, 223, 191);
+}

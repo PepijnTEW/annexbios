@@ -1,9 +1,6 @@
-import { useState } from "react";
 import "../css/navbar.css";
-
-const Navbar = () => {
+const Navbar = ({ activePage, setActivePage }) => {
   const navItems = ["Home", "Films", "Showtimes", "Add movie"];
-  const [selectedItem, setSelectedItem] = useState("Home");
 
   return (
     <aside className="sideNavbar">
@@ -13,9 +10,9 @@ const Navbar = () => {
         {navItems.map((item) => (
           <button
             key={item}
-            className={`navItem ${selectedItem === item ? "active" : ""}`}
+            className={`navItem ${activePage === item ? "active" : ""}`}
             type="button"
-            onClick={() => setSelectedItem(item)}
+            onClick={() => setActivePage(item)}
           >
             {item}
           </button>

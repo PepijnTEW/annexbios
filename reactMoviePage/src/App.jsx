@@ -12,33 +12,29 @@ import "./index.css";
 const App = () => {
   // comment the checklogin function and put true in the usestate below to test certain pages
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLoginPage, setShowLoginPage] = useState(false);
-  const [showMoviePage, setShowMoviePage] = useState(false);
-  const [moviesPlayingPage, setMoviesPlayingPage] = useState(false);
-  const [runTimesPage, setrunTimesPage] = useState(false);
-  const [showAddmovie, setShowAddmovie] = useState(true);
+  const [activePage, setActivePage] = useState("Home");
 
   useEffect(() => {
     // checklogin();
-  });
+  }, [isLoggedIn]);
   const checklogin = () => {
     if (isLoggedIn === true) {
-      setShowMoviePage(true);
+      setActivePage("Home");
     } else {
-      setShowLoginPage(true);
+      setActivePage("Login");
     }
   };
   return (
     <div className="pageLayout">
-      <Navbar />
+      <Navbar activePage={activePage} setActivePage={setActivePage} />
 
       <main className="pageContent">
         <h1>Anex Bios</h1>
-        {showLoginPage && <LoginPage />}
-        {showMoviePage && <Movie />}
-        {moviesPlayingPage && <MoviesPlaying />}
-        {runTimesPage && <RunTimes />}
-        {showAddmovie && <AddMovie />}
+        {activePage === "LoginPage" && <LoginPage />}
+        {activePage === "Home" && <Movie />}
+        {activePage === "Films" && <MoviesPlaying />}
+        {activePage === "Showtimes" && <RunTimes />}
+        {activePage === "Add movie" && <AddMovie />}
       </main>
     </div>
   );

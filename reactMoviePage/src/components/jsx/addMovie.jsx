@@ -36,18 +36,50 @@ const AddMovie = () => {
   const [pickedId, setPickedId] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [locations, setLocations] = useState([
+    { name: "Leerdam", roomCount: 2 },
+    { name: "Maarssen", roomCount: 2 },
+    { name: "Breukelen", roomCount: 2 },
+    { name: "Bilthoven", roomCount: 2 },
+    { name: "Montfoort", roomCount: 2 },
+    { name: "Woerden", roomCount: 2 },
+    { name: "Leidscherijn", roomCount: 2 },
+    { name: "Zeist", roomCount: 2 },
+  ]);
   const [selectedLocation, setSelectedLocation] = useState("Leerdam");
+  const [roomOption, setRoomOption] = useState(
+    Array.from({ length: 4 }, (_, index) => ({
+      name: `Zaal ${index + 1}`,
+      id: index + 1,
+    })),
+  );
+  const [pickedRoom, setPickedRoom] = useState("");
 
-  const locations = [
-    "Leerdam",
-    "Maarssen",
-    "Breukelen",
-    "Bilthoven",
-    "Montfoort",
-    "Woerden",
-    "Leidscherijn",
-    "Zeist",
-  ];
+  const updateRoomsForLocation = (locationName) => {
+    const selectedLocationData = locations.find(
+      (location) => location.name === locationName,
+    );
+
+    const count = selectedLocationData ? selectedLocationData.roomCount : 1;
+
+    setRoomOption(
+      Array.from({ length: count }, (_, index) => ({
+        name: `Zaal ${index + 1}`,
+        id: index + 1,
+      })),
+    );
+
+    setPickedRoom("");
+  };
+
+  const sendData = (
+    movieTitle,
+    movieId,
+    movieDate,
+    movieTime,
+    movieLocation,
+    roomName,
+  ) => {};
 
   return (
     <div>
@@ -120,17 +152,35 @@ const AddMovie = () => {
                 <select
                   id="movieLocation"
                   value={selectedLocation}
-                  onChange={(e) => setSelectedLocation(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedLocation(e.target.value);
+                    updateRoomsForLocation(e.target.value);
+                  }}
                 >
                   {locations.map((location) => (
-                    <option key={location} value={location}>
-                      {location}
+                    <option key={location.name} value={location.name}>
+                      {location.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="formRow">
+                <label htmlFor="pickedRoom">Zaal</label>
+                <select
+                  id="pickedRoom"
+                  value={pickedRoom}
+                  onChange={(e) => setPickedRoom(e.target.value)}
+                >
+                  <option value="">Kies een zaal</option>
+                  {roomOption.map((room) => (
+                    <option key={room.id} value={room.name}>
+                      {room.name}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {selectedDate && selectedTime && (
+              {selectedDate && selectedTime && pickedRoom && (
                 <button
                   type="button"
                   className="saveButton"
@@ -171,6 +221,29 @@ const AddMovie = () => {
               <span className="confirmationLabel">Vestiging:</span>
               <span className="confirmationValue">{selectedLocation}</span>
             </div>
+
+            <div className="confirmationRow">
+              <span className="confirmationLabel">Zaal:</span>
+              <span className="confirmationValue">{pickedRoom}</span>
+            </div>
+
+            <button
+              type="button"
+              className="sendButton"
+              onClick={() => {
+                sendData(
+                  pickedMovie,
+                  pickedId,
+                  selectedDate,
+                  selectedTime,
+                  selectedLocation,
+                  pickedRoom,
+                );
+                setAddMovieStep(1);
+              }}
+            >
+              Confirm
+            </button>
           </div>
         )}
       </div>
