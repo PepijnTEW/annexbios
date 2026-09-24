@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\V1\ShowtimesFilter;
-use App\Models\Showtimes;
+use App\Models\Showtime;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ShowtimesCollection;
 use App\Http\Resources\V1\ShowtimesResource;
