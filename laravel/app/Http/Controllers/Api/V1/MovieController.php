@@ -38,7 +38,13 @@ class MovieController extends Controller
      */
     public function store(StoreMovieRequest $request)
     {
-        return new MovieResource(Movie::create($request->validated()));
+        $movie = Movie::create($request->validated());
+
+        if ($request->has('actors')) {
+            $movie->actors()->attach($request->actors);
+        }
+
+        return new MovieResource($movie);
     }
 
     /**

@@ -17,8 +17,6 @@ class ActorResource extends JsonResource
         return [
             'actorId' => $this->actor_id,
             'name' => $this->name,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
         ];
     }
 }

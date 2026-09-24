@@ -30,7 +30,14 @@ class StoreMovieRequest extends FormRequest
             'language' => ['required', 'string'],
             'imd_rating' => ['required', 'numeric'],
             'poster_path' => ['required', 'string'],
-            'active' => ['required', 'bool']
+            'active' => ['required', 'bool'],
+
+            'actors' => ['sometimes', 'array'],
+            'actors.*' => ['exists:actors,actor_id'],
+
+            'runtime' => ['required', 'integer', 'min:1'],
+            'run_start_at' => ['sometimes', 'nullable', 'date'],
+            'run_end_at' => ['sometimes', 'nullable', 'date', 'after:run_starts_at'],
         ];
     }
 
@@ -40,6 +47,8 @@ class StoreMovieRequest extends FormRequest
             'release_date' => $this->input('releaseDate'),
             'imd_rating' => $this->input('imdRating'),
             'poster_path' => $this->input('posterPath'),
+            'run_start_at' => $this->input('runStartAt'),
+            'run_end_at' => $this->input('runEndAt'),
         ]);
     }
 }

@@ -22,10 +22,11 @@ class MovieResource extends JsonResource
             'language' => $this->language,
             'imdRating' => $this->imd_rating,
             'posterPath' => $this->poster_path,
+            'runtime' => $this->runtime,
             'active' => $this->active,
+            'actors' => ActorResource::collection($this->actors),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
-            'actors' => ActorResource::collection($this->actors)
         ];
     }
 }
