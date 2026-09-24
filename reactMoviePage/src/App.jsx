@@ -1,37 +1,42 @@
 import LoginPage from "./components/jsx/Login.jsx";
 import Movie from "./components/jsx/Movie.jsx";
-import MoviesPlaying from "./components/jsx/MoviesPlaying.jsx";
-import RunTimes from "./components/jsx/RunTimes.jsx";
+import MoviesPlaying from "./components/jsx/moviesPlaying.jsx";
+import RunTimes from "./components/jsx/runTimes.jsx";
+import AddMovie from "./components/jsx/addMovie.jsx";
+import Navbar from "./components/jsx/navbar.jsx";
 import { useState, useEffect } from "react";
 
 import "./index.css";
 
 const App = () => {
   // comment the checklogin function and put true in the usestate below to test certain pages
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLoginPage, setShowLoginPage] = useState(false);
-  const [showMoviePage, setShowMoviePage] = useState(false);
-  const [moviesPlayingPage, setMoviesPlayingPage] = useState(false);
-  const [runTimesPage, setrunTimesPage] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [activePage, setActivePage] = useState("Home");
 
   useEffect(() => {
     checklogin();
-  });
+  }, [isLoggedIn]);
   const checklogin = () => {
     if (isLoggedIn === true) {
-      setShowMoviePage(true);
+      setActivePage("Home");
+      setIsLoggedIn(true);
     } else {
-      setShowLoginPage(true);
+      setActivePage("loginPage");
     }
   };
   return (
-    <>
-      <h1>Anex Bios</h1>
-      {showLoginPage && <LoginPage />}
-      {showMoviePage && <Movie />}
-      {moviesPlayingPage && <MoviesPlaying />}
-      {runTimesPage && <RunTimes />}
-    </>
+    <div className="pageLayout">
+      <Navbar activePage={activePage} setActivePage={setActivePage} />
+
+      <main className="pageContent">
+        <h1>Anex Bios</h1>
+        {activePage === "loginPage" && <LoginPage />}
+        {activePage === "Home" && <Movie />}
+        {activePage === "Films" && <MoviesPlaying />}
+        {activePage === "Showtimes" && <RunTimes />}
+        {activePage === "Add movie" && <AddMovie />}
+      </main>
+    </div>
   );
 };
 export default App;

@@ -9,7 +9,9 @@
   padding: 1rem;
   overflow-x: auto;
 }
-
+h2 {
+  color: #f9d3b4;
+}
 .RTcard {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
