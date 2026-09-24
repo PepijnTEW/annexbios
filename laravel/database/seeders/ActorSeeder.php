@@ -13,8 +13,16 @@ class ActorSeeder extends Seeder
      */
     public function run(): void
     {
-        Actor::factory()
-        ->has(Movie::factory()->count(2), 'movies')
-        ->count(20)->create();
+        $actors = Actor::factory()
+            ->count(20)
+            ->create();
+
+        $movies = Movie::all();
+
+        foreach ($movies as $movie) {
+            $movie->actors()->attach(
+                $actors->random(rand(1, 4))->pluck('actor_id')
+            );
+        }
     }
 }
