@@ -24,7 +24,10 @@ class MovieResource extends JsonResource
             'posterPath' => $this->poster_path,
             'active' => $this->active,
             'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at
+            'updatedAt' => $this->updated_at,
+
+            'genres' => GenreResource::collection($this->whenLoaded('genres')),
+            'actors' => ActorResource::collection($this->whenLoaded('actors')),
         ];
     }
 }

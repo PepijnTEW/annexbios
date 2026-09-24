@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Movie;
-use Illuminate\Database\Seeder;
 use App\Models\Actor;
+use Illuminate\Database\Seeder;
 
 class ActorSeeder extends Seeder
 {
@@ -13,8 +13,6 @@ class ActorSeeder extends Seeder
      */
     public function run(): void
     {
-        Actor::factory()
-        ->has(Movie::factory()->count(2), 'movies')
-        ->count(20)->create();
+        Actor::factory()->count(20)->create();
     }
 }

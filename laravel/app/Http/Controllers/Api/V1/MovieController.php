@@ -19,9 +19,13 @@ class MovieController extends Controller
         $filter = new MoviesFilter();
         $filterItems = $filter->transform($request);
 
-        $movies = Movie::where($filterItems);
+        $query = Movie::with(['genres','actors']);
 
-        return new MovieCollection($movies->paginate()->appends($request->query()));
+        if(!empty($filterItems)) {
+            $query->where($filterItems);
+        }
+
+        return new MovieCollection($query->paginate()->appends($request->query()));
     }
 
     /**
@@ -45,7 +49,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-        return new MovieResource($movie);
+        return new MovieResource($movie->load(['genres', 'actors']));
     }
 
     /**

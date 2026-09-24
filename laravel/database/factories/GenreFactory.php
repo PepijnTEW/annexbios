@@ -20,7 +20,7 @@ class GenreFactory extends Factory
     {
         return [
             'genre_id' => fake()->unique()->numberBetween(100, 999),
-            'genre_name' => fake()->name(),
+            'genre_name' => fake()->word(),
         ];
     }
 }

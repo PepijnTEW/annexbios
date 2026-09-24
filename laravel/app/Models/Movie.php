@@ -52,7 +52,13 @@ class Movie extends Model
     */
     public function genres(): BelongsToMany
     {
-       return $this->belongsToMany(Genre::class, 'movie_genres', 'movie_id', 'genre_id');
+       return $this->belongsToMany(Genre::class,
+            'movie_genres',
+            'movie_id',
+            'genre_id',
+            'movie_id',
+            'genre_id'
+        );
     }
 
     /**
@@ -60,6 +66,12 @@ class Movie extends Model
     */
     public function actors(): BelongsToMany
     {
-       return $this->belongsToMany(Actor::class, 'casts', 'movie_id', 'actor_id');
+        return $this->belongsToMany(Actor::class,
+            'casts',
+            'movie_id',
+            'actor_id',
+            'movie_id',
+            'actor_id'
+        );
     }
 }

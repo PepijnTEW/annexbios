@@ -13,8 +13,6 @@ class GenreSeeder extends Seeder
      */
     public function run(): void
     {
-        Genre::factory()
-        ->has(Movie::factory()->count(3), 'movieGenre')
-        ->count(20)->create();
+        Genre::factory()->count(20)->create();
     }
 }
