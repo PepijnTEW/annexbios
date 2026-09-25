@@ -16,10 +16,11 @@ class ShowtimesResource extends JsonResource
     {
         return [
             'showtimeId' => $this->showtime_id,
-            'cinemaId' => $this->cinema_id,
+            'cinemaId' => $this->showroom?->cinema_id,
+            'showroomId' => $this->showroom_id,
             'movieId' => $this->movie_id,
-            'date' => $this->date,
-            'time' => $this->time,
+            'startTime' => $this->start_time,
+            'endTime' => $this->end_time,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
             'movie' => new MovieResource($this->movie)

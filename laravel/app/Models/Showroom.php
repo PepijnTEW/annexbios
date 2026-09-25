@@ -23,18 +23,18 @@ class Showroom extends Model
     ];
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showroom>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Cinema, \App\Models\Showroom>
+     */
     public function cinema(): BelongsTo
     {
         return $this->belongsTo(Cinema::class, 'cinema_id', 'cinema_id');
     }
 
     /**
-         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Showtime, \App\Models\Showroom>
-    */
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Showtime, \App\Models\Showroom>
+     */
     public function showtime(): HasMany
     {
-       return $this->hasMany(Showtime::class);
+        return $this->hasMany(Showtime::class);
     }
 }

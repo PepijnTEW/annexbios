@@ -6,6 +6,7 @@ use App\Filters\V1\MoviesFilter;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreMovieRequest;
 use App\Http\Resources\V1\MovieCollection;
 use App\Http\Resources\V1\MovieResource;
 
@@ -19,9 +20,9 @@ class MovieController extends Controller
         $filter = new MoviesFilter();
         $filterItems = $filter->transform($request);
 
-        $query = Movie::with(['genres','actors']);
+        $query = Movie::with(['genres', 'actors']);
 
-        if(!empty($filterItems)) {
+        if (!empty($filterItems)) {
             $query->where($filterItems);
         }
 
@@ -39,9 +40,15 @@ class MovieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMovieRequest $request)
     {
-        //
+        $movie = Movie::create($request->validated());
+
+        if ($request->has('actors')) {
+            $movie->actors()->attach($request->actors);
+        }
+
+        return new MovieResource($movie);
     }
 
     /**

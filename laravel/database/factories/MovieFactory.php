@@ -35,6 +35,7 @@ class MovieFactory extends Factory
                 ->addMinutes($runtime)
                 ->format('H:i:s'),
             'active' => fake()->boolean(),
+            'runtime' => fake()->randomDigitNotNull()
         ];
     }
 }

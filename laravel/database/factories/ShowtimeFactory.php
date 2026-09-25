@@ -21,11 +21,13 @@ class ShowtimeFactory extends Factory
      */
     public function definition(): array
     {
+        $startTime = $this->faker->dateTimeBetween('now', '+30 days');
+
         return [
-            'showroom_id' => Showroom::inRandomOrder()->value('showroom_id'),
-            'movie_id' => Movie::inRandomOrder()->value('movie_id'),
-            'start_time' => $this->faker->dateTime('H:i:s'),
-            'end_time' => $this->faker->dateTime('H:i:s')
+            'showroom_id' => Showroom::inRandomOrder()->value('showroom_id') ?? Showroom::query()->firstOrFail()->showroom_id,
+            'movie_id' => Movie::inRandomOrder()->value('movie_id') ?? Movie::query()->firstOrFail()->movie_id,
+            'start_time' => $startTime->format('Y-m-d H:i:s'),
+            'end_time' => (clone $startTime)->modify('+2 hours')->format('Y-m-d H:i:s'),
         ];
     }
 }
