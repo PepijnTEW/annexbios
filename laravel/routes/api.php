@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\ActorController;
 use App\Http\Controllers\Api\V1\MovieController;
 use App\Http\Controllers\Api\V1\CinemaController;
 use App\Http\Controllers\Api\V1\ShowtimeController;
+use App\Http\Controllers\Api\V1\PosterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,4 +33,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
     Route::apiResource('actors', ActorController::class)
         ->only(['store'])
         ->middleware('ability:actors:create');
+
+    Route::apiResource('posters', PosterController::class)
+        ->only(['store'])
+        ->middleware('ability:posters:create');
 });
