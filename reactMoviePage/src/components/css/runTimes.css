@@ -9,9 +9,11 @@
   padding: 1rem;
   overflow-x: auto;
 }
+
 h2 {
   color: #f9d3b4;
 }
+
 .RTcard {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -20,10 +22,12 @@ h2 {
   justify-content: space-evenly;
   min-width: 600px;
 }
+
 .RTrowBorder {
   border-top: 2px solid gray;
   grid-column: 1 / 5;
 }
+
 .RTaddButton {
   padding: 10px 20px;
   border-radius: 5px;
@@ -35,6 +39,7 @@ h2 {
   transition-duration: 0.4s;
   margin-top: 1rem;
 }
+
 .RTaddButton:hover {
   background-color: #544444;
   color: white;
