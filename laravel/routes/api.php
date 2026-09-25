@@ -25,7 +25,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
 
     // POST routes for HQ
     Route::apiResource('movies', MovieController::class) // POST api/v1/movies
-        ->only(['store'])
+        ->only(['store', 'update'])
         ->middleware('ability:movies:create');
     Route::apiResource('showtimes', ShowtimeController::class) // POST api/v1/showtimes
         ->only(['store'])
