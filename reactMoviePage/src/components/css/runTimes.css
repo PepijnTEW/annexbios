@@ -1,0 +1,39 @@
+.RTcontainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 70%;
+  margin: 0 auto;
+  gap: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.RTcard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-evenly;
+  min-width: 600px;
+}
+.RTrowBorder {
+  border-top: 2px solid gray;
+  grid-column: 1 / 5;
+}
+.RTaddButton {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #000000;
+  color: #1f2123;
+  font-weight: bold;
+  cursor: pointer;
+  color: #f9d3b4;
+  transition-duration: 0.4s;
+  margin-top: 1rem;
+}
+.RTaddButton:hover {
+  background-color: #544444;
+  color: white;
+}

@@ -45,6 +45,11 @@
   font-weight: bold;
   cursor: pointer;
   color: #f9d3b4;
+  transition-duration: 0.4s;
+}
+.PMmodal-button:hover {
+  background-color: #544444;
+  color: white;
 }
 .PMsaveButton {
   padding: 10px 20px;
@@ -54,4 +59,9 @@
   font-weight: bold;
   cursor: pointer;
   margin-top: 1rem;
+  transition-duration: 0.4s;
+}
+.PMsaveButton:hover {
+  background-color: #2582b0;
+  color: white;
 }
