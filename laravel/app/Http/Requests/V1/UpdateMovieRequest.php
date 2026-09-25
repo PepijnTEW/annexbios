@@ -12,7 +12,7 @@ class UpdateMovieRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; //CHANGE TO AUTH
+        return $this->user()->tokenCan('movies:create');
     }
 
     /**
