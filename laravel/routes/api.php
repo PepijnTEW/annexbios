@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ActorController;
 use App\Http\Controllers\Api\V1\MovieController;
 use App\Http\Controllers\Api\V1\CinemaController;
 use App\Http\Controllers\Api\V1\ShowtimeController;
@@ -28,4 +29,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
     Route::apiResource('showtimes', ShowtimeController::class) // POST api/v1/showtimes
         ->only(['store'])
         ->middleware('ability:showtimes:create');
+    Route::apiResource('actors', ActorController::class)
+        ->only(['store'])
+        ->middleware('ability:actors:create');
 });
