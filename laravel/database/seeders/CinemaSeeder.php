@@ -66,6 +66,7 @@ class CinemaSeeder extends Seeder
                 'movies:create',
                 'showtimes:create',
                 'actors:create',
+                'cinemas:read',
             ]
         )->plainTextToken;
 
