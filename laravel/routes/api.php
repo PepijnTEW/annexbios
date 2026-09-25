@@ -28,7 +28,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
         ->only(['store', 'update'])
         ->middleware('ability:movies:create');
     Route::apiResource('showtimes', ShowtimeController::class) // POST api/v1/showtimes
-        ->only(['store'])
+        ->only(['store', 'update'])
         ->middleware('ability:showtimes:create');
     Route::apiResource('actors', ActorController::class)
         ->only(['store'])
