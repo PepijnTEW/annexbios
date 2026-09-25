@@ -45,7 +45,7 @@ const Movie = () => {
       overview: selectedMovie.overview,
       releaseDate: selectedMovie.release_date,
       rating: selectedMovie.vote_average,
-      posterPath: selectedMovie.poster_path,
+      posterPath: "https://image.tmdb.org/t/p/w500" + selectedMovie.poster_path,
       language: selectedMovie.original_language,
       runtime: selectedMovie.runtime,
       actors: (selectedMovie.credits?.cast ?? [])
