@@ -9,20 +9,19 @@ body {
 }
 
 .locaties {
-    @apply rounded-sm bg-white m-1 flex flex-col items-start;
-    width: 20vw;
+    @apply rounded-sm bg-white m-1 flex flex-col items-start w-full;
 }
 
-.headLinks{
+.headLinks {
     @apply m-2 text-2xl;
 }
 
-.films{
-    @apply h-[22vw] bg-violet-400;
+.films {
+    @apply w-full aspect-[2/3] bg-violet-400;
 }
 
 @layer components {
-  .page-container {
-    @apply max-w-7xl mx-auto px-4;
-  }
+    .page-container {
+        @apply max-w-7xl mx-auto px-4;
+    }
 }
