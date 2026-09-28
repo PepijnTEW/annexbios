@@ -35,6 +35,9 @@ class StoreMovieRequest extends FormRequest
             'actors' => ['sometimes', 'array'],
             'actors.*' => ['exists:actors,actor_id'],
 
+            'genres' => ['sometimes', 'array'],
+            'genres.*' => ['exists:genres,genre_id'],
+
             'runtime' => ['required', 'integer', 'min:1'],
             'run_start_at' => ['sometimes', 'nullable', 'date'],
             'run_end_at' => ['sometimes', 'nullable', 'date', 'after:run_starts_at'],

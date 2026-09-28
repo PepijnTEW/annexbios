@@ -18,7 +18,7 @@ class MovieResource extends JsonResource
             'movieId' => $this->movie_id,
             'title' => $this->title,
             'description' => $this->description,
-            'releaseDate' => $this->release_date,
+            'releaseDate' => $this->release_date->format('Y-m-d'),
             'language' => $this->language,
             'imdRating' => $this->imd_rating,
             'posterPath' => $this->poster_path,
