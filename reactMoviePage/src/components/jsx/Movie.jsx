@@ -8,6 +8,8 @@ const API_KEY =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MmQzOTk4NWNkMmM2OGZlYzZiNjdkNzczODFiMjg5ZSIsIm5iZiI6MTc4OTEyMjMyMC4wNzEsInN1YiI6IjZhYTNkNzEwYjUzZGQwZTIxZTRhNmEzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wKNzl3RyxuDxHvTZydd_BOO6g8AX68sioOSNyM_4hLY";
 const API_URL = `https://api.themoviedb.org/3/search/movie`;
 
+const API_URL_POST = "https://annex.pepijntw.com/api/v1/movies";
+const API_KEY_POST = "9|JaTe49xsmDqaiBv34hTxyrGUfh9KUsJLMyeZ3MdFf8f56ad2";
 const OPTIONS = {
   method: "GET",
   headers: {
@@ -42,17 +44,31 @@ const Movie = () => {
   const sendMovie = async () => {
     const movieData = {
       title: selectedMovie.title,
-      overview: selectedMovie.overview,
+      description: selectedMovie.overview,
       releaseDate: selectedMovie.release_date,
-      rating: selectedMovie.vote_average,
+      imdRating: selectedMovie.vote_average,
       posterPath: "https://image.tmdb.org/t/p/w500" + selectedMovie.poster_path,
       language: selectedMovie.original_language,
       runtime: selectedMovie.runtime,
-      actors: (selectedMovie.credits?.cast ?? [])
-        .slice(0, 3)
-        .map((actor) => actor.name),
-      id: selectedMovie.id,
+      active: false,
     };
+    try {
+      const response = await fetch(API_URL_POST, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_KEY_POST}`,
+        },
+        body: JSON.stringify(movieData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Movie could not be saved: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error saving movie:", error);
+      return;
+    }
     console.log(movieData);
     handleClose();
   };

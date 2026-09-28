@@ -1,17 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/moviesplaying.css";
 import { Checkbox, Modal } from "@mui/material";
 
 const MoviesPlaying = () => {
   const [conformSaveModal, setConformSaveModal] = useState(false);
   const [updatedMovies, setUpdatedMovies] = useState([]);
-  const [activeMovies, setActiveMovies] = useState([
-    // hier moet de film data worden ingeladen
-    { title: "fightclub", id: 101, active: true },
-    { title: "hailmary", id: 100, active: true },
-    { title: "thematrix", id: 102, active: true },
-  ]);
+  const [activeMovies, setActiveMovies] = useState([]);
+
+  useEffect(() => {
+    async function loadMovies() {
+      const movies = [];
+      let url = API_URL;
+
+      while (url) {
+        const response = await fetch(url, OPTIONS_GET);
+        if (!response.ok)
+          throw new Error(`ophalen mislukt:" ${response.status}`);
+
+        const page = await response.json();
+        movies.push(...page.data);
+        url = page.links?.next;
+      }
+      setActiveMovies(
+        movies.map((movie) => ({
+          id: movie.movieId,
+          title: movie.title,
+          active: movie.active,
+        })),
+      );
+    }
+
+    loadMovies().catch(console.error);
+  }, []);
+
   const [showRunTimes, setShowRunTimes] = useState(true);
+  const API_URL = "https://annex.pepijntw.com/api/v1/movies";
+  const API_KEY = "9|JaTe49xsmDqaiBv34hTxyrGUfh9KUsJLMyeZ3MdFf8f56ad2";
+  const OPTIONS_GET = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  };
+  const OPTIONS_POST = {
+    method: "post",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  };
 
   const isMovieChecked = (movie) => {
     const changedMovie = updatedMovies.find((m) => m.id === movie.id);

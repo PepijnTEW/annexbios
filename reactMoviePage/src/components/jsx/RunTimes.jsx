@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/runTimes.css";
-import { Modal } from "@mui/material";
+
+const API_URL = "https://annex.pepijntw.com/api/v1/showtimes";
+const API_KEY = "9|JaTe49xsmDqaiBv34hTxyrGUfh9KUsJLMyeZ3MdFf8f56ad2";
+const OPTIONS_GET = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${API_KEY}`,
+  },
+};
 
 const RunTimes = () => {
-  const [addMovieMedal, setAddMovieMedal] = useState(false);
   const [editRunTimes, setEditRunTimes] = useState({
     open: false,
     title: "",
@@ -14,6 +22,49 @@ const RunTimes = () => {
     room: "",
     duration: "",
   });
+
+  const [runTimeMovies, setRunTimeMovies] = useState([]);
+
+  useEffect(() => {
+    async function loadShowtimes() {
+      const showtimes = [];
+      let url = API_URL;
+
+      while (url) {
+        const response = await fetch(url, OPTIONS_GET);
+        if (!response.ok)
+          throw new Error(`ophalen mislukt:" ${response.status}`);
+
+        const page = await response.json();
+        showtimes.push(...page.data);
+        url = page.links?.next;
+      }
+
+      setRunTimeMovies(
+        showtimes.map((showtime) => {
+          const startTime = showtime.startTime ?? "";
+          const endTime = showtime.endTime ?? "";
+          const durationMinutes = Math.round(
+            (Date.parse(endTime) - Date.parse(startTime)) / 60000,
+          );
+
+          return {
+            id: showtime.showtimeId,
+            title: showtime.movie?.title ?? `Film ${showtime.movieId}`,
+            date: startTime.slice(0, 10),
+            time: startTime.slice(11, 16),
+            location: showtime.cinemaId ?? "",
+            room: showtime.showroomId ?? "",
+            duration: Number.isFinite(durationMinutes)
+              ? `${String(Math.floor(durationMinutes / 60)).padStart(2, "0")}:${String(durationMinutes % 60).padStart(2, "0")}`
+              : "",
+          };
+        }),
+      );
+    }
+
+    loadShowtimes().catch(console.error);
+  }, []);
 
   const [locations, setLocations] = useState([
     { name: "Leerdam", roomCount: 2 },
@@ -26,28 +77,6 @@ const RunTimes = () => {
     { name: "Zeist", roomCount: 2 },
   ]);
 
-  const [runTimeMovies, setRunTimeMovies] = useState([
-    {
-      title: "Hail mary",
-      id: 101,
-      date: "2026-09-21",
-      time: "22:00",
-      location: "Leerdam",
-      room: 2,
-      duration: "01:03",
-    },
-    {
-      title: "fightclub",
-      id: 102,
-      date: "2026-10-21",
-      time: "20:00",
-      location: "Maarssen",
-      room: 1,
-      duration: "01:50",
-    },
-  ]);
-
-  // Bepaal de momenteel geselecteerde vestiging en de beschikbare zalen
   const currentLocationObj =
     locations.find((loc) => loc.name === editRunTimes.location) || locations[0];
 
