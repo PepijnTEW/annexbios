@@ -12,7 +12,7 @@ class UpdateShowtimeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; //CHANGE TO AUTH
+        return $this->user()->tokenCan('showtimes:create');
     }
 
     /**
@@ -41,5 +41,31 @@ class UpdateShowtimeRequest extends FormRequest
                 'showroom_id' => ['sometimes', 'required', 'exists:showrooms,showroom_id'],
             ];
         }
+    }
+    public function prepareForValidation()
+    {
+        $data = [];
+
+        if ($this->has('movieId')) {
+            $data['movie_id'] = $this->input('movieId');
+        }
+
+        if ($this->has('cinemaId')) {
+            $data['cinema_id'] = $this->input('cinemaId');
+        }
+
+        if ($this->has('startTime')) {
+            $data['start_time'] = $this->input('startTime');
+        }
+
+        if ($this->has('endTime')) {
+            $data['end_time'] = $this->input('endTime');
+        }
+
+        if ($this->has('showroomId')) {
+            $data['showroom_id'] = $this->input('showroomId');
+        }
+
+        $this->merge($data);
     }
 }
