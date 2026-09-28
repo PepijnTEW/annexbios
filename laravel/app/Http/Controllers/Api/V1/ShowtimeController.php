@@ -6,6 +6,7 @@ use App\Filters\V1\ShowtimesFilter;
 use App\Models\Showtime;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreShowtimeRequest;
+use App\Http\Requests\V1\UpdateShowtimeRequest;
 use App\Http\Resources\V1\ShowtimesCollection;
 use App\Http\Resources\V1\ShowtimesResource;
 use Illuminate\Http\Request;
@@ -23,7 +24,9 @@ class ShowtimeController extends Controller
         $showtimes = Showtime::with(['movie', 'showroom'])
             ->where($filterItems)
             ->whereHas('showroom', function ($query) use ($request) {
-                $query->where('cinema_id', $request->user()->cinema_id);
+                if ($request->user()->cinema_id !== 9) {
+                    $query->where('cinema_id', $request->user()->cinema_id);
+                }
             });
 
         return new ShowtimesCollection($showtimes->paginate()->appends($request->query()));
@@ -48,9 +51,9 @@ class ShowtimeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Showtime $showtimes)
+    public function show(Showtime $showtime)
     {
-        return new ShowtimesResource($showtimes);
+        return new ShowtimesResource($showtime);
     }
 
     /**
@@ -64,9 +67,9 @@ class ShowtimeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Showtime $showtimes)
+    public function update(UpdateShowtimeRequest $request, Showtime $showtime)
     {
-        //
+        $showtime->update($request->all());
     }
 
     /**
