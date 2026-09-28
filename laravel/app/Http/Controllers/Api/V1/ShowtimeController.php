@@ -24,7 +24,9 @@ class ShowtimeController extends Controller
         $showtimes = Showtime::with(['movie', 'showroom'])
             ->where($filterItems)
             ->whereHas('showroom', function ($query) use ($request) {
-                $query->where('cinema_id', $request->user()->cinema_id);
+                if ($request->user()->cinema_id !== 9) {
+                    $query->where('cinema_id', $request->user()->cinema_id);
+                }
             });
 
         return new ShowtimesCollection($showtimes->paginate()->appends($request->query()));
