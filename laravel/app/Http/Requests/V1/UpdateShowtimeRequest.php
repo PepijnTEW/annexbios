@@ -26,19 +26,19 @@ class UpdateShowtimeRequest extends FormRequest
 
         if ($method === 'PUT') {
             return [
-                'movie_id' => ['required'],
-                'cinema_id' => ['required'],
-                'start_time' => ['required'],
-                'end_time' => ['required'],
-                'showroom_id' => ['required'],
+                'movie_id' => ['required', 'int', 'exists:movies,movie_id'],
+                'cinema_id' => ['required', 'int', 'exists:cinemas,cinema_id'],
+                'start_time' => ['required', 'datetime'],
+                'end_time' => ['required', 'datetime'],
+                'showroom_id' => ['required', 'exists:showrooms,showroom_id'],
             ];
         } else {
             return [
-                'movie_id' => ['sometimes', 'required'],
-                'cinema_id' => ['required', 'sometimes'],
-                'start_time' => ['sometimes', 'required'],
-                'end_time' => ['sometimes', 'required'],
-                'showroom_id' => ['sometimes', 'required'],
+                'movie_id' => ['sometimes', 'required', 'int', 'exists:movies,movie_id'],
+                'cinema_id' => ['required', 'sometimes', 'int', 'exists:cinemas,cinema_id'],
+                'start_time' => ['sometimes', 'required', 'datetime'],
+                'end_time' => ['sometimes', 'required', 'datetime'],
+                'showroom_id' => ['sometimes', 'required', 'exists:showrooms,showroom_id'],
             ];
         }
     }
