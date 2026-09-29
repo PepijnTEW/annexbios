@@ -4,12 +4,11 @@ import SearchIcon from "../assets/search.svg";
 import MovieCard from "./MovieCard.jsx";
 import { Button, Modal, Box, Typography } from "@mui/material";
 
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MmQzOTk4NWNkMmM2OGZlYzZiNjdkNzczODFiMjg5ZSIsIm5iZiI6MTc4OTEyMjMyMC4wNzEsInN1YiI6IjZhYTNkNzEwYjUzZGQwZTIxZTRhNmEzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wKNzl3RyxuDxHvTZydd_BOO6g8AX68sioOSNyM_4hLY";
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = `https://api.themoviedb.org/3/search/movie`;
 
 const API_URL_POST = "https://annex.pepijntw.com/api/v1/movies";
-const API_KEY_POST = "9|JaTe49xsmDqaiBv34hTxyrGUfh9KUsJLMyeZ3MdFf8f56ad2";
+const API_KEY_POST = process.env.REACT_APP_ANNEX_API_KEY;
 const OPTIONS = {
   method: "GET",
   headers: {
@@ -50,7 +49,7 @@ const Movie = () => {
       posterPath: "https://image.tmdb.org/t/p/w500" + selectedMovie.poster_path,
       language: selectedMovie.original_language,
       runtime: selectedMovie.runtime,
-      active: false,
+      active: true,
     };
     try {
       const response = await fetch(API_URL_POST, {

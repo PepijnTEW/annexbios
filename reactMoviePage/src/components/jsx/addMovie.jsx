@@ -1,36 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/addMovie.css";
 
 const AddMovie = () => {
-  const [movieOption, setMovieOption] = useState([
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-    { title: "fightclub", id: 101 },
-    { title: "hailmary", id: 100 },
-    { title: "thematrix", id: 102 },
-  ]);
+  const [movieOption, setMovieOption] = useState([]);
+  useEffect(() => {
+    async function loadMovies() {
+      const movies = [];
+      let url = API_URL;
+
+      while (url) {
+        const response = await fetch(url, OPTIONS_GET);
+        if (!response.ok)
+          throw new Error(`ophalen mislukt:" ${response.status}`);
+
+        const page = await response.json();
+        movies.push(...page.data);
+        url = page.links?.next;
+      }
+      const activeMoviesOnly = movies.filter((movie) => movie.active === true);
+
+      setMovieOption(
+        activeMoviesOnly.map((movie) => ({
+          id: movie.movieId,
+          title: movie.title,
+          active: movie.active,
+        })),
+      );
+    }
+
+    loadMovies().catch(console.error);
+  }, []);
+
+  const API_URL = "https://annex.pepijntw.com/api/v1/movies";
+  const API_KEY = process.env.REACT_APP_ANNEX_API_KEY;
+  const OPTIONS_GET = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  };
+
   const [addMovieStep, setAddMovieStep] = useState(1);
   const [pickedMovie, setPickedMovie] = useState("");
   const [pickedId, setPickedId] = useState("");
