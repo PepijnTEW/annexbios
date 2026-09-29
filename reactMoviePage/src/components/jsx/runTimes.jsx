@@ -51,8 +51,8 @@ const RunTimes = () => {
           return {
             id: showtime.showtimeId,
             title: showtime.movie?.title ?? `Film ${showtime.movieId}`,
-            date: startTime,
-            time: startTime,
+            date: startTime.slice(0, 10),
+            time: startTime.slice(11, 16),
             location: showtime.cinemaId ?? "",
             room: showtime.showroomId ?? "",
             duration: Number.isFinite(durationMinutes)
@@ -114,6 +114,24 @@ const RunTimes = () => {
     );
   };
 
+  const zalen = {
+    28: 'Leerdam 1',
+    29: 'Leerdam 2',
+    30: 'Maarssen 1',
+    31: 'Maarssen 2',
+    32: 'Breukelen 1',
+    33: 'Breukelen 2',
+    34: 'Bilthoven 1',
+    35: 'Montfoort 1',
+    36: 'Montfoort 2',
+    37: 'Woerden 1',
+    38: 'Woerden 2',
+    39: 'Leidscherijn 1',
+    40: 'Leidscherijn 2',
+    41: 'Zeist 1',
+    42: 'Zeist 2'
+  };
+
   return (
     <>
       <div className="app">
@@ -139,7 +157,7 @@ const RunTimes = () => {
                 <div className="RTdate">{movie.date}</div>
                 <div className="RTtime">{movie.time}</div>
                 <div className="RTlocation">{movie.location}</div>
-                <div className="RTroom">{movie.room}</div>
+                <div className="RTroom">{zalen[movie.room]}</div>
                 <div className="RTduration">{movie.duration}</div>
                 <button
                   onClick={() => {
