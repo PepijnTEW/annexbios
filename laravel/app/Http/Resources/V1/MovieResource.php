@@ -25,8 +25,8 @@ class MovieResource extends JsonResource
             'runtime' => $this->runtime,
             'active' => $this->active,
             'actors' => ActorResource::collection($this->actors),
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
+            'createdAt' => $this->created_at->format('Y-m-d H:i:s'),
+            'updatedAt' => $this->updated_at->format('Y-m-d H:i:s'),
             'genres' => GenreResource::collection($this->whenLoaded('genres')),
             'actors' => ActorResource::collection($this->whenLoaded('actors')),
         ];
