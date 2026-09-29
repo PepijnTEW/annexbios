@@ -45,9 +45,15 @@ class MovieController extends Controller
     {
         $movie = Movie::create($request->validated());
 
+        if ($request->has('genres')) {
+            $movie->genres()->attach($request->genres);
+        }
+
         if ($request->has('actors')) {
             $movie->actors()->attach($request->actors);
         }
+
+        $movie->load(['genres', 'actors']);
 
         return new MovieResource($movie);
     }

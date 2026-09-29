@@ -46,4 +46,23 @@ class UpdateMovieRequest extends FormRequest
             ];
         }
     }
+
+    public function prepareForValidation()
+    {
+        $data = [];
+
+        if ($this->has('releaseDate')) {
+            $data['release_date'] = $this->input('releaseDate');
+        }
+
+        if ($this->has('imdRating')) {
+            $data['imd_rating'] = $this->input('imdRating');
+        }
+
+        if ($this->has('posterPath')) {
+            $data['poster_path'] = $this->input('posterPath');
+        }
+
+        $this->merge($data);
+    }
 }
