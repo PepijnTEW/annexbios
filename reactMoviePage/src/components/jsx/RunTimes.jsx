@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../css/runTimes.css";
 
 const API_URL = "https://annex.pepijntw.com/api/v1/showtimes";
-const API_KEY = "9|JaTe49xsmDqaiBv34hTxyrGUfh9KUsJLMyeZ3MdFf8f56ad2";
+const API_KEY = process.env.REACT_APP_ANNEX_API_KEY;
 const OPTIONS_GET = {
   method: "GET",
   headers: {
