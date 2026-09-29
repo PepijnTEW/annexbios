@@ -51,8 +51,8 @@ const RunTimes = () => {
           return {
             id: showtime.showtimeId,
             title: showtime.movie?.title ?? `Film ${showtime.movieId}`,
-            date: startTime.slice(0, 10),
-            time: startTime.slice(11, 16),
+            date: startTime,
+            time: startTime,
             location: showtime.cinemaId ?? "",
             room: showtime.showroomId ?? "",
             duration: Number.isFinite(durationMinutes)
