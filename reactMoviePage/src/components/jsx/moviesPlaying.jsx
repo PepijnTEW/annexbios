@@ -43,13 +43,6 @@ const MoviesPlaying = () => {
       Authorization: `Bearer ${API_KEY}`,
     },
   };
-  const OPTIONS_POST = {
-    method: "post",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${API_KEY}`,
-    },
-  };
 
   const isMovieChecked = (movie) => {
     const changedMovie = updatedMovies.find((m) => m.id === movie.id);
@@ -70,76 +63,97 @@ const MoviesPlaying = () => {
       }
     });
   };
+  const handleSaveMovies = async () => {
+    try {
+      await Promise.all(
+        updatedMovies.map(async (movie) => {
+          const response = await fetch(`${API_URL}/${movie.id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${API_KEY}`,
+            },
+            body: JSON.stringify({ active: movie.active }),
+          });
 
-  return (
-    <>
-      <div className="app">
-        <h2 id="movies-playing">Draaiende films</h2>
+          if (!response.ok) {
+            throw new Error(`Opslaan mislukt: ${response.status}`);
+          }
+        }),
+      );
 
-        <div className="PMcontainer">
-          <div className="PMcard">
-            <div className="PMtitle">Titel</div>
-            <div className="PMid">Film ID</div>
-            <p>enabled</p>
-          </div>
-          <div className="PMrowBorder"></div>
+      setActiveMovies((prev) =>
+        prev.map((movie) => {
+          const update = updatedMovies.find((item) => item.id === movie.id);
+          return update ? { ...movie, active: update.active } : movie;
+        }),
+      );
+      setUpdatedMovies([]);
+      setConformSaveModal(false);
+    } catch (error) {
+      console.error("Niet goed opgeslagen", error);
+    }
+  };
 
-          {activeMovies.map((movie) => (
-            <React.Fragment key={movie.id}>
+
+      return (
+        <>
+          <div className="app">
+            <h2 id="movies-playing">Draaiende films</h2>
+
+            <div className="PMcontainer">
               <div className="PMcard">
-                <div className="PMtitle">{movie.title}</div>
-                <div className="PMid">{movie.id}</div>
-                <Checkbox
-                  checked={isMovieChecked(movie)}
-                  onChange={(e) =>
-                    handleCheckboxChange(e, movie.title, movie.id)
-                  }
-                />
+                <div className="PMtitle">Titel</div>
+                <div className="PMid">Film ID</div>
+                <p>enabled</p>
               </div>
               <div className="PMrowBorder"></div>
-            </React.Fragment>
-          ))}
-        </div>
 
-        {updatedMovies.length > 0 && (
-          <button
-            className="PMsaveButton"
-            onClick={() => setConformSaveModal(true)}
-          >
-            Save
-          </button>
-        )}
+              {activeMovies.map((movie) => (
+                <React.Fragment key={movie.id}>
+                  <div className="PMcard">
+                    <div className="PMtitle">{movie.title}</div>
+                    <div className="PMid">{movie.id}</div>
+                    <Checkbox
+                      checked={isMovieChecked(movie)}
+                      onChange={(e) =>
+                        handleCheckboxChange(e, movie.title, movie.id)
+                      }
+                    />
+                  </div>
+                  <div className="PMrowBorder"></div>
+                </React.Fragment>
+              ))}
+            </div>
 
-        <Modal
-          className="PMmodal"
-          open={conformSaveModal}
-          onClose={() => setConformSaveModal(false)}
-        >
-          <div className="PMmodal-content">
-            <p>Are you sure you want to save these changes?</p>
-            <button
-              className="PMmodal-button"
-              onClick={() => {
-                setConformSaveModal(false);
-                console.log("Changes saved:", updatedMovies);
+            {updatedMovies.length > 0 && (
+              <button
+                className="PMsaveButton"
+                onClick={() => setConformSaveModal(true)}
+              >
+                Save
+              </button>
+            )}
 
-                setActiveMovies((prev) =>
-                  prev.map((movie) => {
-                    const update = updatedMovies.find((u) => u.id === movie.id);
-                    return update ? { ...movie, active: update.active } : movie;
-                  }),
-                );
-
-                setUpdatedMovies([]);
-              }}
+            <Modal
+              className="PMmodal"
+              open={conformSaveModal}
+              onClose={() => setConformSaveModal(false)}
             >
-              Confirm
-            </button>
+              <div className="PMmodal-content">
+                <p>Are you sure you want to save these changes?</p>
+                <button
+                  className="PMmodal-button"
+                  onClick={handleSaveMovies}
+                >
+                  Confirm
+                </button>
+              </div>
+            </Modal>
           </div>
-        </Modal>
-      </div>
-    </>
-  );
-};
+        </>
+      );
+    };
 
-export default MoviesPlaying;
+    export default MoviesPlaying;
