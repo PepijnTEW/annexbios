@@ -90,9 +90,10 @@ const Movie = () => {
 
       if (!response.ok) {
         const details = (await response.text()).slice(0, 300);
-        throw new Error(`Movie could not be saved: ${response.status} ${details}`);
+        throw new Error(
+          `Movie could not be saved: ${response.status} ${details}`,
+        );
       }
-
     } catch (error) {
       console.error("Error saving movie and cast:", error);
       setSaveError(error.message);
@@ -159,7 +160,10 @@ const Movie = () => {
                 Runtime: {selectedMovie.runtime} minutes
               </Typography>
               <Typography variant="body2">
-                Genres: {(selectedMovie.genres ?? []).map((genre) => genre.name).join(", ")}
+                Genres:{" "}
+                {(selectedMovie.genres ?? [])
+                  .map((genre) => genre.name)
+                  .join(", ")}
               </Typography>
               <Typography variant="body2">
                 Actors:{" "}

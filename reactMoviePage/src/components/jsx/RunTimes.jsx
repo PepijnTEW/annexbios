@@ -210,7 +210,6 @@ const RunTimes = () => {
                       setEditRunTimes((prev) => ({
                         ...prev,
                         location: newLocation,
-                        // Zet zaal op 1 als de gekozen zaal hoger is dan roomCount van de nieuwe vestiging
                         room:
                           prev.room > (newLocObj?.roomCount || 1)
                             ? 1
