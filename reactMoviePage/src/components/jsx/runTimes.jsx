@@ -1,14 +1,114 @@
 import React, { useEffect, useState } from "react";
 import "../css/runTimes.css";
 
-const API_URL = "https://annex.pepijntw.com/api/v1/showtimes";
-const API_KEY = process.env.REACT_APP_ANNEX_API_KEY;
-const OPTIONS_GET = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${API_KEY}`,
+const apiRequest = async (endpoint="", method="GET", data=null) => {
+  const API_URL = "https://annex.pepijntw.com/api/v1";
+  const API_KEY = process.env.REACT_APP_ANNEX_API_KEY;
+  const OPTIONS = {
+    method: method,
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  };
+
+  if (data) {
+    OPTIONS.body = JSON.stringify(data);
+  }
+
+  const url = API_URL + endpoint;
+  const response = await fetch(url, OPTIONS);
+
+  if (!response.ok) {
+    throw new Error(`ophalen mislukt:" ${response.status}`);
+  }
+
+  return response.json();
+};
+
+const formatShowtime = (showtime) => {
+  const startTime = showtime.startTime ?? "";
+  const endTime = showtime.endTime ?? "";
+  const durationMinutes = Math.round(
+    (Date.parse(endTime) - Date.parse(startTime)) / 60000,
+  );
+
+  return {
+    id: showtime.showtimeId,
+    title: showtime.movie?.title ?? `Film ${showtime.movieId}`,
+    date: startTime.slice(0, 10),
+    time: startTime.slice(11, 16),
+    location: showtime.cinemaId ?? "",
+    room: showtime.showroomId ?? "",
+    duration: Number.isFinite(durationMinutes)
+      ? `${String(Math.floor(durationMinutes / 60)).padStart(2, "0")}:${String(durationMinutes % 60).padStart(2, "0")}`
+      : "",
+  };
+};
+
+const LOCATIONS = [
+  {
+    name: "Leerdam",
+      rooms: [
+        { id: 28, number: 1, label: 'Leerdam 1' },
+        { id: 29, number: 2, label: 'Leerdam 2' }
+    ]
   },
+  {
+    name: "Maarssen",
+    rooms: [
+      { id: 30, number: 1, label: 'Maarssen 1' },
+      { id: 31, number: 2, label: 'Maarssen 2' }
+    ]
+  },
+  {
+    name: "Breukelen",
+    rooms: [
+      { id: 32, number: 1, label: 'Breukelen 1' },
+      { id: 33, number: 2, label: 'Breukelen 2' }
+    ]
+  },
+  {
+    name: "Bilthoven",
+    rooms: [
+      { id: 34, number: 1, label: 'Bilthoven 1' },
+    ]
+  },
+  {
+    name: "Montfoort",
+    rooms: [
+      { id: 35, number: 1, label: 'Montfoort 1' },
+      { id: 36, number: 2, label: 'Montfoort 2' }
+    ]
+  },
+  {
+    name: "Woerden",
+    rooms: [
+      { id: 37, number: 1, label: 'Woerden 1' },
+      { id: 38, number: 2, label: 'Woerden 2' }
+    ]
+  },
+  {
+    name: "Leidscherijn",
+    rooms: [
+      { id: 39, number: 1, label: 'Leidscherijn 1' },
+      { id: 40, number: 2, label: 'Leidscherijn 2' }
+    ]
+  },
+  {
+    name: "Zeist",
+    rooms: [
+      { id: 41, number: 1, label: 'Zeist 1' },
+      { id: 42, number: 2, label: 'Zeist 2' }
+    ]
+  },
+];
+
+const getRoomLabel = (roomId) => {
+  for (const loc of LOCATIONS) {
+    const foundRoom = loc.rooms.find((r) => r.id === roomId);
+    if (foundRoom) return foundRoom.label;
+  };
 };
 
 const RunTimes = () => {
@@ -28,108 +128,60 @@ const RunTimes = () => {
   useEffect(() => {
     async function loadShowtimes() {
       const showtimes = [];
-      let url = API_URL;
+      let nextUrl = "/showtimes";
 
-      while (url) {
-        const response = await fetch(url, OPTIONS_GET);
-        if (!response.ok)
-          throw new Error(`ophalen mislukt:" ${response.status}`);
-
-        const page = await response.json();
+      while (nextUrl) {
+        const page = await apiRequest(nextUrl);
         showtimes.push(...page.data);
-        url = page.links?.next;
+        nextUrl = page.links?.next;
       }
-
-      setRunTimeMovies(
-        showtimes.map((showtime) => {
-          const startTime = showtime.startTime ?? "";
-          const endTime = showtime.endTime ?? "";
-          const durationMinutes = Math.round(
-            (Date.parse(endTime) - Date.parse(startTime)) / 60000,
-          );
-
-          return {
-            id: showtime.showtimeId,
-            title: showtime.movie?.title ?? `Film ${showtime.movieId}`,
-            date: startTime.slice(0, 10),
-            time: startTime.slice(11, 16),
-            location: showtime.cinemaId ?? "",
-            room: showtime.showroomId ?? "",
-            duration: Number.isFinite(durationMinutes)
-              ? `${String(Math.floor(durationMinutes / 60)).padStart(2, "0")}:${String(durationMinutes % 60).padStart(2, "0")}`
-              : "",
-          };
-        }),
-      );
+        setRunTimeMovies(showtimes.map(formatShowtime));
     }
 
     loadShowtimes().catch(console.error);
   }, []);
 
-  const [locations, setLocations] = useState([
-    { name: "Leerdam", roomCount: 2 },
-    { name: "Maarssen", roomCount: 2 },
-    { name: "Breukelen", roomCount: 2 },
-    { name: "Bilthoven", roomCount: 2 },
-    { name: "Montfoort", roomCount: 2 },
-    { name: "Woerden", roomCount: 2 },
-    { name: "Leidscherijn", roomCount: 2 },
-    { name: "Zeist", roomCount: 2 },
-  ]);
 
   const currentLocationObj =
-    locations.find((loc) => loc.name === editRunTimes.location) || locations[0];
+    LOCATIONS.find((loc) => loc.name === editRunTimes.location) || LOCATIONS[0];
 
-  const availableRooms = Array.from(
-    { length: currentLocationObj ? currentLocationObj.roomCount : 0 },
-    (_, i) => i + 1,
-  );
+  const availableRooms = currentLocationObj ? currentLocationObj.rooms : [];
 
-  const handleSave = () => {
-    setRunTimeMovies((prevMovies) =>
-      prevMovies.map((movie) =>
-        movie.id === editRunTimes.id
-          ? {
-              ...movie,
-              date: editRunTimes.date,
-              time: editRunTimes.time,
-              location: editRunTimes.location,
-              room: Number(editRunTimes.room),
-            }
-          : movie,
-      ),
-    );
-    setEditRunTimes((prev) => ({ ...prev, open: false }));
-    console.log(
-      "date:",
-      editRunTimes.date,
-      "location:",
-      editRunTimes.location,
-      "room:",
-      editRunTimes.room,
-      "time:",
-      editRunTimes.time,
-      "title:",
-      editRunTimes.title,
-    );
-  };
+  const handleSave = async () => {
 
-  const zalen = {
-    28: 'Leerdam 1',
-    29: 'Leerdam 2',
-    30: 'Maarssen 1',
-    31: 'Maarssen 2',
-    32: 'Breukelen 1',
-    33: 'Breukelen 2',
-    34: 'Bilthoven 1',
-    35: 'Montfoort 1',
-    36: 'Montfoort 2',
-    37: 'Woerden 1',
-    38: 'Woerden 2',
-    39: 'Leidscherijn 1',
-    40: 'Leidscherijn 2',
-    41: 'Zeist 1',
-    42: 'Zeist 2'
+    const startDateTime = new Date(`${editRunTimes.date}T${editRunTimes.time}:00`);
+
+    const durationMinutes = Number(editRunTimes.duration) || 0;
+
+    const endDateTime = new Date(startDateTime.getTime() + durationMinutes * 60000);
+
+    const payload = {
+      cinemaId: editRunTimes.location,
+      movieId: editRunTimes.id,
+      showroomId: editRunTimes.room,
+      startTime: `${editRunTimes.date}T${editRunTimes.time}:00`,
+      endTime: endDateTime.toISOString(),
+    }
+    try {
+      await apiRequest('/showtimes', 'POST', payload);
+
+      setRunTimeMovies((prevMovies) =>
+        prevMovies.map((movie) =>
+          movie.id === editRunTimes.id
+            ? {
+                ...movie,
+                date: editRunTimes.date,
+                time: editRunTimes.time,
+                location: editRunTimes.location,
+                room: Number(editRunTimes.room),
+              }
+            : movie,
+        ),
+      );
+      setEditRunTimes((prev) => ({ ...prev, open: false }));
+    }catch (error) {
+      console.error("Opslaan mislukt:", error);
+    }
   };
 
   return (
@@ -157,7 +209,7 @@ const RunTimes = () => {
                 <div className="RTdate">{movie.date}</div>
                 <div className="RTtime">{movie.time}</div>
                 <div className="RTlocation">{movie.location}</div>
-                <div className="RTroom">{zalen[movie.room]}</div>
+                <div className="RTroom">{getRoomLabel(movie.room)}</div>
                 <div className="RTduration">{movie.duration}</div>
                 <button
                   onClick={() => {
@@ -222,21 +274,17 @@ const RunTimes = () => {
                     value={editRunTimes.location}
                     onChange={(e) => {
                       const newLocation = e.target.value;
-                      const newLocObj = locations.find(
+                      const newLocObj = LOCATIONS.find(
                         (loc) => loc.name === newLocation,
                       );
                       setEditRunTimes((prev) => ({
                         ...prev,
                         location: newLocation,
-                        // Zet zaal op 1 als de gekozen zaal hoger is dan roomCount van de nieuwe vestiging
-                        room:
-                          prev.room > (newLocObj?.roomCount || 1)
-                            ? 1
-                            : prev.room,
+                        room: newLocObj?.rooms[0]?.id || prev.room,
                       }));
                     }}
                   >
-                    {locations.map((loc) => (
+                    {LOCATIONS.map((loc) => (
                       <option key={loc.name} value={loc.name}>
                         {loc.name}
                       </option>
@@ -256,9 +304,9 @@ const RunTimes = () => {
                       }))
                     }
                   >
-                    {availableRooms.map((roomNum) => (
-                      <option key={roomNum} value={roomNum}>
-                        Zaal {roomNum}
+                    {availableRooms.map((roomObj) => (
+                      <option key={roomObj.id} value={roomObj.id}>
+                        {roomObj.label}
                       </option>
                     ))}
                   </select>
