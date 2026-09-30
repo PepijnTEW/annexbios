@@ -1,0 +1,64 @@
+.pageLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.pageContent {
+  flex: 1;
+  padding: 2rem 2rem 2rem 3rem;
+}
+
+.sideNavbar {
+  width: 220px;
+  min-height: 100vh;
+  background: #1f2123;
+  color: #f9d3b4;
+  padding: 1.5rem 1rem;
+}
+
+.navTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #f9d3b4;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.navMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.navItem {
+  color: #f9d3b4;
+  background-color: #1f2123;
+  border: 1px solid rgba(249, 211, 180);
+  border-radius: 5px;
+  padding: 0.9rem 1rem;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navItem:hover {
+  background: rgba(249, 211, 180, 0.08);
+}
+
+@media (max-width: 768px) {
+  .pageLayout {
+    flex-direction: column;
+  }
+
+  .sideNavbar {
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 2px solid rgba(249, 211, 180);
+  }
+
+  .pageContent {
+    padding: 1.5rem;
+  }
+}

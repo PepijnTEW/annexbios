@@ -4,10 +4,12 @@ import SearchIcon from "../assets/search.svg";
 import MovieCard from "./MovieCard.jsx";
 import { Button, Modal, Box, Typography } from "@mui/material";
 
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MmQzOTk4NWNkMmM2OGZlYzZiNjdkNzczODFiMjg5ZSIsIm5iZiI6MTc4OTEyMjMyMC4wNzEsInN1YiI6IjZhYTNkNzEwYjUzZGQwZTIxZTRhNmEzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wKNzl3RyxuDxHvTZydd_BOO6g8AX68sioOSNyM_4hLY";
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const API_URL = `https://api.themoviedb.org/3/search/movie`;
 
+const API_URL_POST_MOVIES = "https://annex.pepijntw.com/api/v1/movies";
+const API_URL_POST_ACTORS = "https://annex.pepijntw.com/api/v1/actors";
+const API_KEY_POST = process.env.REACT_APP_ANNEX_API_KEY;
 const OPTIONS = {
   method: "GET",
   headers: {
@@ -20,6 +22,7 @@ const Movie = () => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [saveError, setSaveError] = useState("");
 
   const searchMovies = async () => {
     const API_SEARCH = API_URL + `?query=${searchTerm}`;
@@ -39,25 +42,72 @@ const Movie = () => {
     setSelectedMovie(detailedData);
   };
 
-  const sendMovie = async () => {
+  const sendMovie = async (movieToSave) => {
+    setSaveError("");
+    const cast = (movieToSave.credits?.cast ?? []).slice(0, 3);
     const movieData = {
-      title: selectedMovie.title,
-      overview: selectedMovie.overview,
-      releaseDate: selectedMovie.release_date,
-      rating: selectedMovie.vote_average,
-      posterPath: selectedMovie.poster_path,
-      language: selectedMovie.original_language,
-      runtime: selectedMovie.runtime,
-      actors: (selectedMovie.credits?.cast ?? [])
-        .slice(0, 3)
-        .map((actor) => actor.name),
-      id: selectedMovie.id,
+      title: movieToSave.title,
+      description: movieToSave.overview,
+      releaseDate: movieToSave.release_date,
+      imdRating: movieToSave.vote_average,
+      posterPath: "https://image.tmdb.org/t/p/w500" + movieToSave.poster_path,
+      language: movieToSave.original_language,
+      runtime: movieToSave.runtime,
+      active: false,
+      actors: cast.map((actor) => actor.id),
+      genres: (movieToSave.genres ?? []).map((genre) => genre.id),
     };
-    console.log(movieData);
-    handleClose();
+
+    try {
+      await Promise.all(
+        cast.map(async (actor) => {
+          const actorResponse = await fetch(API_URL_POST_ACTORS, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${API_KEY_POST}`,
+            },
+            body: JSON.stringify({ actorId: actor.id, name: actor.name }),
+          });
+
+          if (!actorResponse.ok) {
+            const details = (await actorResponse.text()).slice(0, 300);
+            throw new Error(
+              `Actor ${actor.name} (${actor.id}) could not be saved: ${actorResponse.status} ${details}`,
+            );
+          }
+        }),
+      );
+
+      const response = await fetch(API_URL_POST_MOVIES, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_KEY_POST}`,
+        },
+        body: JSON.stringify(movieData),
+      });
+
+      if (!response.ok) {
+        const details = (await response.text()).slice(0, 300);
+        throw new Error(
+          `Movie could not be saved: ${response.status} ${details}`,
+        );
+      }
+    } catch (error) {
+      console.error("Error saving movie and cast:", error);
+      setSaveError(error.message);
+    }
   };
 
   const handleClose = () => setSelectedMovie(null);
+  const handleConfirm = () => {
+    if (!selectedMovie) return;
+
+    const movieToSave = selectedMovie;
+    handleClose();
+    void sendMovie(movieToSave);
+  };
 
   return (
     <div className="app">
@@ -73,6 +123,8 @@ const Movie = () => {
           onClick={() => searchMovies(searchTerm)}
         />
       </div>
+
+      {saveError && <p role="alert">Opslaan mislukt: {saveError}</p>}
 
       {movies?.length > 0 ? (
         <div className="container">
@@ -108,7 +160,10 @@ const Movie = () => {
                 Runtime: {selectedMovie.runtime} minutes
               </Typography>
               <Typography variant="body2">
-                Runtime: {selectedMovie.id}
+                Genres:{" "}
+                {(selectedMovie.genres ?? [])
+                  .map((genre) => genre.name)
+                  .join(", ")}
               </Typography>
               <Typography variant="body2">
                 Actors:{" "}
@@ -118,7 +173,7 @@ const Movie = () => {
                   .join(", ")}
               </Typography>
               <Button onClick={handleClose}>Close</Button>
-              <Button onClick={sendMovie}>Confirm</Button>
+              <Button onClick={handleConfirm}>Confirm</Button>
             </>
           )}
         </Box>

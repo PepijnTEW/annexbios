@@ -30,6 +30,11 @@
 }
 .loginButton {
   border-radius: 5px;
-  width: 50px;
-  padding: 3px;
+  min-width: 100px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.loginError {
+  color: #ff8a80;
+  margin: 0;
 }

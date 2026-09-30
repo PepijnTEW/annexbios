@@ -18,13 +18,17 @@ class MovieResource extends JsonResource
             'movieId' => $this->movie_id,
             'title' => $this->title,
             'description' => $this->description,
-            'releaseDate' => $this->release_date,
+            'releaseDate' => $this->release_date->format('Y-m-d'),
             'language' => $this->language,
             'imdRating' => $this->imd_rating,
             'posterPath' => $this->poster_path,
+            'runtime' => $this->runtime,
             'active' => $this->active,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at
+            'actors' => ActorResource::collection($this->actors),
+            'createdAt' => $this->created_at->format('Y-m-d H:i:s'),
+            'updatedAt' => $this->updated_at->format('Y-m-d H:i:s'),
+            'genres' => GenreResource::collection($this->whenLoaded('genres')),
+            'actors' => ActorResource::collection($this->whenLoaded('actors')),
         ];
     }
 }

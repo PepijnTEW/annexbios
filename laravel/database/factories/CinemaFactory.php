@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
  */
 class CinemaFactory extends Factory
 {
+    protected $model = Cinema::class;
     /**
      * Define the model's default state.
      *

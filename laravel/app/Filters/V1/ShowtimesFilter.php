@@ -9,16 +9,18 @@ class ShowtimesFilter extends ApiFilter
 
     protected $safeParms = [
         'showtimeId' => ['eq'],
-        'cinemaId' => ['eq'],
+        'showroomId' => ['eq'],
         'movieId' => ['eq'],
-        'date' => ['eq', 'lt', 'gt', 'lte', 'gte'],
-        'time' => ['eq', 'lt', 'gt', 'lte', 'gte']
+        'startTime' => ['eq', 'lt', 'gt', 'lte', 'gte'],
+        'endTime' => ['eq', 'lt', 'gt', 'lte', 'gte']
     ];
 
     protected $columnMap = [
         'showtimeId' => 'showtime_id',
-        'cinemaId' => 'cinema_id',
-        'movieId' => 'movie_id'
+        'showroomId' => 'showroom_id',
+        'movieId' => 'movie_id',
+        'startTime' => 'start_time',
+        'endTime' => 'end_time',
     ];
 
     protected $operatorMap = [

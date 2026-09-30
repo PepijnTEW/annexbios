@@ -18,14 +18,21 @@ class Genre extends Model
     public $incrementing = false;
 
     protected $fillable = [
+        'genre_id',
         'genre_name',
     ];
 
     /**
          * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<\App\Models\Movie, \App\Models\Genre>
     */
-    public function movieGenre(): BelongsToMany
+    public function movies(): BelongsToMany
     {
-        return $this->belongsToMany(Movie::class, 'movie_genres', 'genre_id', 'movie_id');
+        return $this->belongsToMany(Movie::class,
+            'movie_genres',
+            'genre_id',
+            'movie_id' ,
+            'genre_id',
+            'movie_id'
+        );
     }
 }

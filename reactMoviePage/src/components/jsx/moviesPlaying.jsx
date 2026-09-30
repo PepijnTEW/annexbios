@@ -1,17 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/moviesplaying.css";
 import { Checkbox, Modal } from "@mui/material";
 
 const MoviesPlaying = () => {
   const [conformSaveModal, setConformSaveModal] = useState(false);
   const [updatedMovies, setUpdatedMovies] = useState([]);
-  const [activeMovies, setActiveMovies] = useState([
-    { title: "fightclub", id: 101, active: true },
-    { title: "hailmary", id: 100, active: true },
-    { title: "thematrix", id: 102, active: true },
-  ]);
+  const [activeMovies, setActiveMovies] = useState([]);
 
-  // Bepaalt of het vinkje op het scherm AAN of UIT staat
+  useEffect(() => {
+    async function loadMovies() {
+      const movies = [];
+      let url = API_URL;
+
+      while (url) {
+        const response = await fetch(url, OPTIONS_GET);
+        if (!response.ok)
+          throw new Error(`ophalen mislukt:" ${response.status}`);
+
+        const page = await response.json();
+        movies.push(...page.data);
+        url = page.links?.next;
+      }
+      setActiveMovies(
+        movies.map((movie) => ({
+          id: movie.movieId,
+          title: movie.title,
+          active: movie.active,
+        })),
+      );
+    }
+
+    loadMovies().catch(console.error);
+  }, []);
+
+  const [showRunTimes, setShowRunTimes] = useState(true);
+  const API_URL = "https://annex.pepijntw.com/api/v1/movies";
+  const API_KEY = process.env.REACT_APP_ANNEX_API_KEY;
+  const OPTIONS_GET = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  };
+
   const isMovieChecked = (movie) => {
     const changedMovie = updatedMovies.find((m) => m.id === movie.id);
     return changedMovie ? changedMovie.active : movie.active;
@@ -31,76 +63,97 @@ const MoviesPlaying = () => {
       }
     });
   };
+  const handleSaveMovies = async () => {
+    try {
+      await Promise.all(
+        updatedMovies.map(async (movie) => {
+          const response = await fetch(`${API_URL}/${movie.id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${API_KEY}`,
+            },
+            body: JSON.stringify({ active: movie.active }),
+          });
 
-  return (
-    <>
-      <h2 id="movies-playing">Movies playing</h2>
-      <div className="app">
-        <div className="PMcontainer">
-          <div className="PMcard">
-            <div className="PMtitle">Movie Title</div>
-            <div className="PMid">Movie ID</div>
-            <p>enabled</p>
-          </div>
-          <div className="PMrowBorder"></div>
+          if (!response.ok) {
+            throw new Error(`Opslaan mislukt: ${response.status}`);
+          }
+        }),
+      );
 
-          {/* Map door activeMovies met Fragment om de CSS-grid niet te breken */}
-          {activeMovies.map((movie) => (
-            <React.Fragment key={movie.id}>
+      setActiveMovies((prev) =>
+        prev.map((movie) => {
+          const update = updatedMovies.find((item) => item.id === movie.id);
+          return update ? { ...movie, active: update.active } : movie;
+        }),
+      );
+      setUpdatedMovies([]);
+      setConformSaveModal(false);
+    } catch (error) {
+      console.error("Niet goed opgeslagen", error);
+    }
+  };
+
+
+      return (
+        <>
+          <div className="app">
+            <h2 id="movies-playing">Draaiende films</h2>
+
+            <div className="PMcontainer">
               <div className="PMcard">
-                <div className="PMtitle">{movie.title}</div>
-                <div className="PMid">{movie.id}</div>
-                <Checkbox
-                  checked={isMovieChecked(movie)}
-                  onChange={(e) =>
-                    handleCheckboxChange(e, movie.title, movie.id)
-                  }
-                />
+                <div className="PMtitle">Titel</div>
+                <div className="PMid">Film ID</div>
+                <p>enabled</p>
               </div>
               <div className="PMrowBorder"></div>
-            </React.Fragment>
-          ))}
-        </div>
 
-        {updatedMovies.length > 0 && (
-          <button
-            className="PMsaveButton"
-            onClick={() => setConformSaveModal(true)}
-          >
-            Save
-          </button>
-        )}
+              {activeMovies.map((movie) => (
+                <React.Fragment key={movie.id}>
+                  <div className="PMcard">
+                    <div className="PMtitle">{movie.title}</div>
+                    <div className="PMid">{movie.id}</div>
+                    <Checkbox
+                      checked={isMovieChecked(movie)}
+                      onChange={(e) =>
+                        handleCheckboxChange(e, movie.title, movie.id)
+                      }
+                    />
+                  </div>
+                  <div className="PMrowBorder"></div>
+                </React.Fragment>
+              ))}
+            </div>
 
-        <Modal
-          className="PMmodal"
-          open={conformSaveModal}
-          onClose={() => setConformSaveModal(false)}
-        >
-          <div className="PMmodal-content">
-            <p>Are you sure you want to save these changes?</p>
-            <button
-              className="PMmodal-button"
-              onClick={() => {
-                setConformSaveModal(false);
-                console.log("Changes saved:", updatedMovies);
+            {updatedMovies.length > 0 && (
+              <button
+                className="PMsaveButton"
+                onClick={() => setConformSaveModal(true)}
+              >
+                Save
+              </button>
+            )}
 
-                setActiveMovies((prev) =>
-                  prev.map((movie) => {
-                    const update = updatedMovies.find((u) => u.id === movie.id);
-                    return update ? { ...movie, active: update.active } : movie;
-                  }),
-                );
-
-                setUpdatedMovies([]);
-              }}
+            <Modal
+              className="PMmodal"
+              open={conformSaveModal}
+              onClose={() => setConformSaveModal(false)}
             >
-              Confirm
-            </button>
+              <div className="PMmodal-content">
+                <p>Are you sure you want to save these changes?</p>
+                <button
+                  className="PMmodal-button"
+                  onClick={handleSaveMovies}
+                >
+                  Confirm
+                </button>
+              </div>
+            </Modal>
           </div>
-        </Modal>
-      </div>
-    </>
-  );
-};
+        </>
+      );
+    };
 
-export default MoviesPlaying;
+    export default MoviesPlaying;

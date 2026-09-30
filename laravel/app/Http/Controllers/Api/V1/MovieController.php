@@ -6,6 +6,8 @@ use App\Filters\V1\MoviesFilter;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreMovieRequest;
+use App\Http\Requests\V1\UpdateMovieRequest;
 use App\Http\Resources\V1\MovieCollection;
 use App\Http\Resources\V1\MovieResource;
 
@@ -19,9 +21,13 @@ class MovieController extends Controller
         $filter = new MoviesFilter();
         $filterItems = $filter->transform($request);
 
-        $movies = Movie::where($filterItems);
+        $query = Movie::with(['genres', 'actors']);
 
-        return new MovieCollection($movies->paginate()->appends($request->query()));
+        if (!empty($filterItems)) {
+            $query->where($filterItems);
+        }
+
+        return new MovieCollection($query->paginate()->appends($request->query()));
     }
 
     /**
@@ -35,9 +41,21 @@ class MovieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMovieRequest $request)
     {
-        //
+        $movie = Movie::create($request->validated());
+
+        if ($request->has('genres')) {
+            $movie->genres()->attach($request->genres);
+        }
+
+        if ($request->has('actors')) {
+            $movie->actors()->attach($request->actors);
+        }
+
+        $movie->load(['genres', 'actors']);
+
+        return new MovieResource($movie);
     }
 
     /**
@@ -45,7 +63,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-        return new MovieResource($movie);
+        return new MovieResource($movie->load(['genres', 'actors']));
     }
 
     /**
@@ -59,9 +77,9 @@ class MovieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Movie $movie)
+    public function update(UpdateMovieRequest $request, Movie $movie)
     {
-        //
+        $movie->update($request->all());
     }
 
     /**

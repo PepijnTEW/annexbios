@@ -3,14 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Showtimes;
+use App\Models\Showtime;
 
-class ShowtimesSeeder extends Seeder
+class ShowtimeSeeder extends Seeder
 {
-
-
     public function run(): void
     {
-        Showtimes::factory()->count(20)->create();
+        Showtime::factory()->count(20)->create();
     }
 }

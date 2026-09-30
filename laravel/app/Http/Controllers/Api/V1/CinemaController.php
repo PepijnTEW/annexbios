@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Resources\V1\CinemaCollection;
-use App\Http\Resources\V1\CinemaResource;
 use App\Models\Cinema;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

@@ -16,12 +16,13 @@ class ShowtimesResource extends JsonResource
     {
         return [
             'showtimeId' => $this->showtime_id,
-            'cinemaId' => $this->cinema_id,
+            'cinemaId' => $this->showroom?->cinema_id,
+            'showroomId' => $this->showroom_id,
             'movieId' => $this->movie_id,
-            'date' => $this->date,
-            'time' => $this->time,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
+            'startTime' => $this->start_time->format('H:i:s'),
+            'endTime' => $this->end_time->format('H:i:s'),
+            'createdAt' => $this->created_at->format('Y-m-d H:i:s'),
+            'updatedAt' => $this->updated_at->format('Y-m-d H:i:s'),
             'movie' => new MovieResource($this->movie)
         ];
     }
