@@ -50,7 +50,7 @@ const AddMovie = () => {
     { name: "Leerdam", roomCount: 2 },
     { name: "Maarssen", roomCount: 2 },
     { name: "Breukelen", roomCount: 2 },
-    { name: "Bilthoven", roomCount: 2 },
+    { name: "Bilthoven", roomCount: 1 },
     { name: "Montfoort", roomCount: 2 },
     { name: "Woerden", roomCount: 2 },
     { name: "Leidscherijn", roomCount: 2 },
@@ -82,14 +82,86 @@ const AddMovie = () => {
     setPickedRoom("");
   };
 
-  const sendData = (
-    movieTitle,
-    movieId,
-    movieDate,
-    movieTime,
-    movieLocation,
-    roomName,
-  ) => {};
+  const sendData = async (
+      movieTitle,
+      movieId,
+      movieDate,
+      movieTime,
+      movieLocation,
+      roomName,
+    ) => {
+      const API_URL_POST = "https://annex.pepijntw.com/api/v1/showtimes";
+
+      const startDate = new Date(`${movieDate}T${movieTime}:00`);
+      const startTime = startDate.toISOString();
+
+      const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000);
+      const endTime = endDate.toISOString();
+
+      const roomId = getRoomId(movieLocation, roomName);
+      const cinemaId = getCinemaId(movieLocation);
+
+      const OPTIONS = {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_KEY}`,
+        },
+        body: JSON.stringify({
+          movieId: Number(movieId),
+          showroomId: Number(roomId),
+          cinemaId: Number(cinemaId),
+          startTime: startTime,
+          endTime: endTime,
+        }),
+      };
+
+      try {
+        const response = await fetch(API_URL_POST, OPTIONS);
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(`Toevoegen mislukt (${response.status}): ${JSON.stringify(errorData.errors || errorData.message || response.statusText)}`);
+        }
+        const result = await response.json();
+        console.log("Showtime succesvol toegevoegd:", result);
+        alert("Filmvoorstelling succesvol toegevoegd!");
+      } catch (error) {
+        console.error("Fout bij versturen:", error);
+        alert(error.message);
+      }
+    };
+
+    // Optional helper function if your locations map to specific cinema IDs
+    const getCinemaId = (locationName) => {
+      const cinemaMapping = {
+        "Leerdam": 1,
+        "Maarssen": 2,
+        "Breukelen": 3,
+        "Bilthoven": 4,
+        "Montfoort": 5,
+        "Woerden": 6,
+        "Leidscherijn": 7,
+        "Zeist": 8
+      };
+      return cinemaMapping[locationName] || 1;
+    };
+
+  const getRoomId = (locationName, roomName) => {
+    const roomNumber = roomName.replace("Zaal ", "").trim();
+    const mapping = {
+      "Leerdam": { "1": 28, "2": 29 },
+      "Maarssen": { "1": 30, "2": 31 },
+      "Breukelen": { "1": 32, "2": 33 },
+      "Bilthoven": { "1": 34 },
+      "Montfoort": { "1": 35, "2": 36 },
+      "Woerden": { "1": 37, "2": 38 },
+      "Leidscherijn": { "1": 39, "2": 40 },
+      "Zeist": { "1": 41, "2": 42 }
+    };
+
+    return mapping[locationName]?.[roomNumber] || null;
+  };
 
   return (
     <div>
