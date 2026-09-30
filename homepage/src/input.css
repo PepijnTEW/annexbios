@@ -8,16 +8,16 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .locaties {
     @apply rounded-sm bg-white m-1 flex flex-col items-start w-full;
 }
 
 .headLinks {
     @apply m-2 text-2xl;
-}
-
-.films {
-    @apply w-full aspect-[2/3] bg-violet-400;
 }
 
 @layer components {
