@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/runTimes.css";
 
-const apiRequest = async (endpoint="", method="GET", data=null) => {
+const apiRequest = async (endpoint = "", method = "GET", data = null) => {
   const API_URL = "https://annex.pepijntw.com/api/v1";
   const API_KEY = process.env.REACT_APP_ANNEX_API_KEY;
   const OPTIONS = {
@@ -55,65 +55,63 @@ const LOCATIONS = [
   {
     id: 1,
     name: "Leerdam",
-      rooms: [
-        { id: 28, number: 1, label: 'Leerdam 1' },
-        { id: 29, number: 2, label: 'Leerdam 2' }
-    ]
+    rooms: [
+      { id: 28, number: 1, label: "Leerdam 1" },
+      { id: 29, number: 2, label: "Leerdam 2" },
+    ],
   },
   {
     id: 2,
     name: "Maarssen",
     rooms: [
-      { id: 30, number: 1, label: 'Maarssen 1' },
-      { id: 31, number: 2, label: 'Maarssen 2' }
-    ]
+      { id: 30, number: 1, label: "Maarssen 1" },
+      { id: 31, number: 2, label: "Maarssen 2" },
+    ],
   },
   {
     id: 3,
     name: "Breukelen",
     rooms: [
-      { id: 32, number: 1, label: 'Breukelen 1' },
-      { id: 33, number: 2, label: 'Breukelen 2' }
-    ]
+      { id: 32, number: 1, label: "Breukelen 1" },
+      { id: 33, number: 2, label: "Breukelen 2" },
+    ],
   },
   {
     id: 4,
     name: "Bilthoven",
-    rooms: [
-      { id: 34, number: 1, label: 'Bilthoven 1' },
-    ]
+    rooms: [{ id: 34, number: 1, label: "Bilthoven 1" }],
   },
   {
     id: 5,
     name: "Montfoort",
     rooms: [
-      { id: 35, number: 1, label: 'Montfoort 1' },
-      { id: 36, number: 2, label: 'Montfoort 2' }
-    ]
+      { id: 35, number: 1, label: "Montfoort 1" },
+      { id: 36, number: 2, label: "Montfoort 2" },
+    ],
   },
   {
     id: 6,
     name: "Woerden",
     rooms: [
-      { id: 37, number: 1, label: 'Woerden 1' },
-      { id: 38, number: 2, label: 'Woerden 2' }
-    ]
+      { id: 37, number: 1, label: "Woerden 1" },
+      { id: 38, number: 2, label: "Woerden 2" },
+    ],
   },
   {
     id: 7,
     name: "Leidscherijn",
     rooms: [
-      { id: 39, number: 1, label: 'Leidscherijn 1' },
-      { id: 40, number: 2, label: 'Leidscherijn 2' }
-    ]
+      { id: 39, number: 1, label: "Leidscherijn 1" },
+      { id: 40, number: 2, label: "Leidscherijn 2" },
+    ],
   },
   {
     id: 8,
     name: "Zeist",
     rooms: [
-      { id: 41, number: 1, label: 'Zeist 1' },
-      { id: 42, number: 2, label: 'Zeist 2' }
-    ]
+      { id: 41, number: 1, label: "Zeist 1" },
+      { id: 42, number: 2, label: "Zeist 2" },
+    ],
   },
 ];
 
@@ -149,12 +147,11 @@ const RunTimes = () => {
         showtimes.push(...page.data);
         nextUrl = page.links?.next;
       }
-        setRunTimeMovies(showtimes.map(formatShowtime));
+      setRunTimeMovies(showtimes.map(formatShowtime));
     }
 
     loadShowtimes().catch(console.error);
   }, []);
-
 
   const currentLocationObj =
     LOCATIONS.find((loc) => loc.name === editRunTimes.location) || LOCATIONS[0];
@@ -162,7 +159,9 @@ const RunTimes = () => {
   const availableRooms = currentLocationObj ? currentLocationObj.rooms : [];
 
   const handleSave = async () => {
-    const selectedLoc = LOCATIONS.find((loc) => loc.name === editRunTimes.location);
+    const selectedLoc = LOCATIONS.find(
+      (loc) => loc.name === editRunTimes.location,
+    );
 
     const payload = {
       cinemaId: selectedLoc ? selectedLoc.id : Number(editRunTimes.cinemaId),
@@ -172,7 +171,7 @@ const RunTimes = () => {
     };
 
     try {
-      await apiRequest(`/showtimes/${editRunTimes.id}`, 'PATCH', payload);
+      await apiRequest(`/showtimes/${editRunTimes.id}`, "PATCH", payload);
       setEditRunTimes((prev) => ({ ...prev, open: false }));
       window.location.reload();
     } catch (error) {

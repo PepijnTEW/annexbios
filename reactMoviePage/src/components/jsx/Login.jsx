@@ -1,15 +1,22 @@
 import { useState } from "react";
 import "../css/Login.css";
 
-const LoginPage = () => {
-  const [logindata, setLoginData] = useState({});
+const LoginPage = ({ onLogin }) => {
+  const [loginMessage, setLoginMessage] = useState("");
+
   const handleSubmitLogin = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    // axios.post("http://example.com/api/endpoint", formData).then((response) => {
-    //   setLoginData(formData);
-    // });
+    const formData = new FormData(event.currentTarget);
+    const loginData = Object.fromEntries(formData.entries());
+    const token = process.env.REACT_APP_ANNEX_API_KEY;
+    if (token && token === loginData.token) {
+      setLoginMessage("");
+      onLogin();
+    } else {
+      setLoginMessage("onjuiste token");
+    }
   };
+
   return (
     <div className="my-component">
       <div className="loginPage">
@@ -20,11 +27,16 @@ const LoginPage = () => {
             method="post"
             onSubmit={handleSubmitLogin}
           >
-            <label className="loginLabel">Gebruikers naam:</label>
-            <input type="text" className="loginInput" name="username" />
-            <label className="loginLabel">wachtwoord:</label>
-            <input type="password" className="loginInput" name="password" />
-            <input type="submit" className="loginButton" value="Login" />
+            <label className="token">token:</label>
+            <input type="password" className="loginInput" name="token" />
+            <button type="submit" className="loginButton">
+              Inloggen
+            </button>
+            {loginMessage && (
+              <p className="loginError" role="alert">
+                {loginMessage}
+              </p>
+            )}
           </form>
         </div>
       </div>
