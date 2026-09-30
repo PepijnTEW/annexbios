@@ -8,6 +8,7 @@ const apiRequest = async (endpoint="", method="GET", data=null) => {
     method: method,
     headers: {
       accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${API_KEY}`,
     },
   };
@@ -33,12 +34,16 @@ const formatShowtime = (showtime) => {
     (Date.parse(endTime) - Date.parse(startTime)) / 60000,
   );
 
+  const matchedLoc = LOCATIONS.find((loc) => loc.id === showtime.cinemaId);
+
   return {
     id: showtime.showtimeId,
+    movieId: showtime.movieId,
     title: showtime.movie?.title ?? `Film ${showtime.movieId}`,
     date: startTime.slice(0, 10),
     time: startTime.slice(11, 16),
-    location: showtime.cinemaId ?? "",
+    location: matchedLoc ? matchedLoc.name : "",
+    cinemaId: showtime.cinemaId ?? "",
     room: showtime.showroomId ?? "",
     duration: Number.isFinite(durationMinutes)
       ? `${String(Math.floor(durationMinutes / 60)).padStart(2, "0")}:${String(durationMinutes % 60).padStart(2, "0")}`
@@ -48,6 +53,7 @@ const formatShowtime = (showtime) => {
 
 const LOCATIONS = [
   {
+    id: 1,
     name: "Leerdam",
       rooms: [
         { id: 28, number: 1, label: 'Leerdam 1' },
@@ -55,6 +61,7 @@ const LOCATIONS = [
     ]
   },
   {
+    id: 2,
     name: "Maarssen",
     rooms: [
       { id: 30, number: 1, label: 'Maarssen 1' },
@@ -62,6 +69,7 @@ const LOCATIONS = [
     ]
   },
   {
+    id: 3,
     name: "Breukelen",
     rooms: [
       { id: 32, number: 1, label: 'Breukelen 1' },
@@ -69,12 +77,14 @@ const LOCATIONS = [
     ]
   },
   {
+    id: 4,
     name: "Bilthoven",
     rooms: [
       { id: 34, number: 1, label: 'Bilthoven 1' },
     ]
   },
   {
+    id: 5,
     name: "Montfoort",
     rooms: [
       { id: 35, number: 1, label: 'Montfoort 1' },
@@ -82,6 +92,7 @@ const LOCATIONS = [
     ]
   },
   {
+    id: 6,
     name: "Woerden",
     rooms: [
       { id: 37, number: 1, label: 'Woerden 1' },
@@ -89,6 +100,7 @@ const LOCATIONS = [
     ]
   },
   {
+    id: 7,
     name: "Leidscherijn",
     rooms: [
       { id: 39, number: 1, label: 'Leidscherijn 1' },
@@ -96,6 +108,7 @@ const LOCATIONS = [
     ]
   },
   {
+    id: 8,
     name: "Zeist",
     rooms: [
       { id: 41, number: 1, label: 'Zeist 1' },
@@ -108,7 +121,7 @@ const getRoomLabel = (roomId) => {
   for (const loc of LOCATIONS) {
     const foundRoom = loc.rooms.find((r) => r.id === roomId);
     if (foundRoom) return foundRoom.label;
-  };
+  }
 };
 
 const RunTimes = () => {
@@ -119,6 +132,7 @@ const RunTimes = () => {
     date: "",
     time: "",
     location: "",
+    cinemaId: "",
     room: "",
     duration: "",
   });
@@ -148,38 +162,20 @@ const RunTimes = () => {
   const availableRooms = currentLocationObj ? currentLocationObj.rooms : [];
 
   const handleSave = async () => {
-
-    const startDateTime = new Date(`${editRunTimes.date}T${editRunTimes.time}:00`);
-
-    const durationMinutes = Number(editRunTimes.duration) || 0;
-
-    const endDateTime = new Date(startDateTime.getTime() + durationMinutes * 60000);
+    const selectedLoc = LOCATIONS.find((loc) => loc.name === editRunTimes.location);
 
     const payload = {
-      cinemaId: editRunTimes.location,
-      movieId: editRunTimes.id,
-      showroomId: editRunTimes.room,
+      cinemaId: selectedLoc ? selectedLoc.id : Number(editRunTimes.cinemaId),
+      movieId: Number(editRunTimes.movieId),
+      showroomId: Number(editRunTimes.room),
       startTime: `${editRunTimes.date}T${editRunTimes.time}:00`,
-      endTime: endDateTime.toISOString(),
-    }
-    try {
-      await apiRequest('/showtimes', 'POST', payload);
+    };
 
-      setRunTimeMovies((prevMovies) =>
-        prevMovies.map((movie) =>
-          movie.id === editRunTimes.id
-            ? {
-                ...movie,
-                date: editRunTimes.date,
-                time: editRunTimes.time,
-                location: editRunTimes.location,
-                room: Number(editRunTimes.room),
-              }
-            : movie,
-        ),
-      );
+    try {
+      await apiRequest(`/showtimes/${editRunTimes.id}`, 'PATCH', payload);
       setEditRunTimes((prev) => ({ ...prev, open: false }));
-    }catch (error) {
+      window.location.reload();
+    } catch (error) {
       console.error("Opslaan mislukt:", error);
     }
   };
@@ -217,9 +213,11 @@ const RunTimes = () => {
                       open: true,
                       id: movie.id,
                       title: movie.title,
+                      movieId: movie.movieId,
                       date: movie.date,
                       time: movie.time,
                       location: movie.location,
+                      cinemaId: movie.cinemaId,
                       room: movie.room,
                       duration: movie.duration,
                     });
@@ -280,6 +278,7 @@ const RunTimes = () => {
                       setEditRunTimes((prev) => ({
                         ...prev,
                         location: newLocation,
+                        cinemaId: newLocObj ? newLocObj.id : prev.cinemaId,
                         room: newLocObj?.rooms[0]?.id || prev.room,
                       }));
                     }}
