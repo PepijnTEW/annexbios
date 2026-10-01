@@ -17,7 +17,7 @@ const apiRequest = async (endpoint = "", method = "GET", data = null) => {
     OPTIONS.body = JSON.stringify(data);
   }
 
-  const url = API_URL + endpoint;
+  const url = endpoint.startsWith("http") ? endpoint : API_URL + endpoint;
   const response = await fetch(url, OPTIONS);
 
   if (!response.ok) {
@@ -171,7 +171,7 @@ const RunTimes = () => {
     };
 
     try {
-      await apiRequest(`/showtimes/${editRunTimes.id}`, "PATCH", payload);
+      await apiRequest(`/showtimes${editRunTimes.id}`, "PATCH", payload);
       setEditRunTimes((prev) => ({ ...prev, open: false }));
       window.location.reload();
     } catch (error) {
