@@ -30,9 +30,9 @@ const apiRequest = async (endpoint = "", method = "GET", data = null) => {
 const formatShowtime = (showtime) => {
   const startTime = showtime.startTime ?? "";
   const endTime = showtime.endTime ?? "";
-  const durationMinutes = Math.round(
-    (Date.parse(endTime) - Date.parse(startTime)) / 60000,
-  );
+  const durationMinutes = Number.isFinite(Number(showtime.movie?.runtime))
+    ? Number(showtime.movie.runtime)
+    : Math.round((Date.parse(endTime) - Date.parse(startTime)) / 60000);
 
   const matchedLoc = LOCATIONS.find((loc) => loc.id === showtime.cinemaId);
 
