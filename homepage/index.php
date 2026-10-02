@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hoofdkantoor AnnexBios</title>
+    <link rel="shortcut icon" href="assets/afbeeldingen/annexbiosLogoHK.jpg" type="image/x-icon">
     <link href="src/output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
