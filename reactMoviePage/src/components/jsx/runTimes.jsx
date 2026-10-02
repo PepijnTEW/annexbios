@@ -17,7 +17,7 @@ const apiRequest = async (endpoint = "", method = "GET", data = null) => {
     OPTIONS.body = JSON.stringify(data);
   }
 
-  const url = API_URL + endpoint;
+  const url = endpoint.startsWith("http") ? endpoint : API_URL + endpoint;
   const response = await fetch(url, OPTIONS);
 
   if (!response.ok) {
@@ -30,9 +30,9 @@ const apiRequest = async (endpoint = "", method = "GET", data = null) => {
 const formatShowtime = (showtime) => {
   const startTime = showtime.startTime ?? "";
   const endTime = showtime.endTime ?? "";
-  const durationMinutes = Math.round(
-    (Date.parse(endTime) - Date.parse(startTime)) / 60000,
-  );
+  const durationMinutes = Number.isFinite(Number(showtime.movie?.runtime))
+    ? Number(showtime.movie.runtime)
+    : Math.round((Date.parse(endTime) - Date.parse(startTime)) / 60000);
 
   const matchedLoc = LOCATIONS.find((loc) => loc.id === showtime.cinemaId);
 
@@ -171,7 +171,7 @@ const RunTimes = () => {
     };
 
     try {
-      await apiRequest(`/showtimes/${editRunTimes.id}`, "PATCH", payload);
+      await apiRequest(`/showtimes${editRunTimes.id}`, "PATCH", payload);
       setEditRunTimes((prev) => ({ ...prev, open: false }));
       window.location.reload();
     } catch (error) {

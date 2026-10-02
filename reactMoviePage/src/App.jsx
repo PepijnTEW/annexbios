@@ -31,7 +31,7 @@ const App = () => {
       )}
 
       <main className="pageContent">
-        <h1>Anex Bios</h1>
+        <h1>Annex Bios</h1>
         {activePage === "loginPage" && (
           <LoginPage onLogin={() => setIsLoggedIn(true)} />
         )}

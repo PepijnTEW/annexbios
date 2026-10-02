@@ -19,7 +19,7 @@ const MoviesPlaying = () => {
 
         const page = await response.json();
         movies.push(...page.data);
-        url = page.links?.next;
+        url = page.links?.next ? new URL(page.links.next, url).href : null;
       }
       setActiveMovies(
         movies.map((movie) => ({
@@ -96,64 +96,60 @@ const MoviesPlaying = () => {
     }
   };
 
+  return (
+    <>
+      <div className="app">
+        <h2 id="movies-playing">Draaiende films</h2>
 
-      return (
-        <>
-          <div className="app">
-            <h2 id="movies-playing">Draaiende films</h2>
+        <div className="PMcontainer">
+          <div className="PMcard">
+            <div className="PMtitle">Titel</div>
+            <div className="PMid">Film ID</div>
+            <p>enabled</p>
+          </div>
+          <div className="PMrowBorder"></div>
 
-            <div className="PMcontainer">
+          {activeMovies.map((movie) => (
+            <React.Fragment key={movie.id}>
               <div className="PMcard">
-                <div className="PMtitle">Titel</div>
-                <div className="PMid">Film ID</div>
-                <p>enabled</p>
+                <div className="PMtitle">{movie.title}</div>
+                <div className="PMid">{movie.id}</div>
+                <Checkbox
+                  checked={isMovieChecked(movie)}
+                  onChange={(e) =>
+                    handleCheckboxChange(e, movie.title, movie.id)
+                  }
+                />
               </div>
               <div className="PMrowBorder"></div>
+            </React.Fragment>
+          ))}
+        </div>
 
-              {activeMovies.map((movie) => (
-                <React.Fragment key={movie.id}>
-                  <div className="PMcard">
-                    <div className="PMtitle">{movie.title}</div>
-                    <div className="PMid">{movie.id}</div>
-                    <Checkbox
-                      checked={isMovieChecked(movie)}
-                      onChange={(e) =>
-                        handleCheckboxChange(e, movie.title, movie.id)
-                      }
-                    />
-                  </div>
-                  <div className="PMrowBorder"></div>
-                </React.Fragment>
-              ))}
-            </div>
+        {updatedMovies.length > 0 && (
+          <button
+            className="PMsaveButton"
+            onClick={() => setConformSaveModal(true)}
+          >
+            Save
+          </button>
+        )}
 
-            {updatedMovies.length > 0 && (
-              <button
-                className="PMsaveButton"
-                onClick={() => setConformSaveModal(true)}
-              >
-                Save
-              </button>
-            )}
-
-            <Modal
-              className="PMmodal"
-              open={conformSaveModal}
-              onClose={() => setConformSaveModal(false)}
-            >
-              <div className="PMmodal-content">
-                <p>Are you sure you want to save these changes?</p>
-                <button
-                  className="PMmodal-button"
-                  onClick={handleSaveMovies}
-                >
-                  Confirm
-                </button>
-              </div>
-            </Modal>
+        <Modal
+          className="PMmodal"
+          open={conformSaveModal}
+          onClose={() => setConformSaveModal(false)}
+        >
+          <div className="PMmodal-content">
+            <p>Are you sure you want to save these changes?</p>
+            <button className="PMmodal-button" onClick={handleSaveMovies}>
+              Confirm
+            </button>
           </div>
-        </>
-      );
-    };
+        </Modal>
+      </div>
+    </>
+  );
+};
 
-    export default MoviesPlaying;
+export default MoviesPlaying;

@@ -4,7 +4,7 @@ const Navbar = ({ activePage, setActivePage }) => {
 
   return (
     <aside className="sideNavbar">
-      <div className="navTitle">Anex Bios</div>
+      <div className="navTitle">Annex Bios</div>
 
       <nav className="navMenu" aria-label="Main navigation">
         {navItems.map((item) => (
