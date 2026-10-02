@@ -15,7 +15,7 @@ const AddMovie = () => {
 
         const page = await response.json();
         movies.push(...page.data);
-        url = page.links?.next;
+        url = page.links?.next ? new URL(page.links.next, url).href : null;
       }
       const activeMoviesOnly = movies.filter((movie) => movie.active === true);
 

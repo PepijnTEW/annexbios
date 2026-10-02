@@ -59,8 +59,8 @@ h2 {
 
 .RTmodalCard {
   width: min(520px, 90vw);
-  background: #1a1d20;
-  border: 1px solid #e3dcd7;
+  background: #f8f9fa;
+  border: 1px solid #000000;
   border-radius: 6px;
   padding: 1.5rem;
   color: #f9d3b4;
@@ -68,7 +68,7 @@ h2 {
 
 .RTmodalCard h3 {
   margin: 0 0 1rem;
-  color: #f9d3b4;
+  color: #060606;
 }
 
 .RTmodalForm {
@@ -80,15 +80,15 @@ h2 {
   display: grid;
   gap: 0.35rem;
   font-size: 0.9rem;
-  color: #f9d3b4;
+  color: #000000;
 }
 
 .RTmodalForm input,
 .RTmodalForm select {
-  border: 1px solid #f9d3b4;
+  border: 1px solid #000000;
   border-radius: 8px;
-  background: #121416;
-  color: #f4efe9;
+  background: #f9f9fa;
+  color: #000000;
   padding: 0.75rem 0.85rem;
   font-size: 0.95rem;
 }
@@ -110,12 +110,12 @@ h2 {
 }
 
 .RTprimaryButton {
-  background: #f9d3b4;
+  background: #504d4b;
   color: #1a1d20;
 }
 
 .RTsecondaryButton {
-  background: transparent;
-  color: #f9d3b4;
+  background: #212020;
+  color: #afaba7;
   border: 1px solid #f9d3b4;
 }
