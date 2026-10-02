@@ -1,62 +1,46 @@
-import "./App.css";
-import { useEffect, useState } from "react";
-import SearchIcon from "./search.svg";
-import MovieCard from "./MovieCard.jsx";
+import LoginPage from "./components/jsx/Login.jsx";
+import Movie from "./components/jsx/Movie.jsx";
+import MoviesPlaying from "./components/jsx/moviesPlaying.jsx";
+import RunTimes from "./components/jsx/runTimes.jsx";
+import AddMovie from "./components/jsx/addMovie.jsx";
+import Navbar from "./components/jsx/navbar.jsx";
+import { useState, useEffect } from "react";
 
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MmQzOTk4NWNkMmM2OGZlYzZiNjdkNzczODFiMjg5ZSIsIm5iZiI6MTc4OTEyMjMyMC4wNzEsInN1YiI6IjZhYTNkNzEwYjUzZGQwZTIxZTRhNmEzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wKNzl3RyxuDxHvTZydd_BOO6g8AX68sioOSNyM_4hLY";
-const API_URL = `https://api.themoviedb.org/3/search/movie`;
-
-const OPTIONS = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${API_KEY}`,
-  },
-};
+import "./index.css";
 
 const App = () => {
-  const [movies, setMovies] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  // comment the checklogin function and put true in the usestate below to test certain pages
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [activePage, setActivePage] = useState("Home");
 
-  const searchMovies = async () => {
-    const API_SEARCH = API_URL + `?query=${searchTerm}`;
-    const response = await fetch(API_SEARCH, OPTIONS);
-    const data = await response.json();
-
-    setMovies(data.results);
+  useEffect(() => {
+    checklogin();
+  }, [isLoggedIn]);
+  const checklogin = () => {
+    if (isLoggedIn === true) {
+      setActivePage("Home");
+      setIsLoggedIn(true);
+    } else {
+      setActivePage("loginPage");
+    }
   };
-
   return (
-    <div className="app">
-      <h1>Anex Bios</h1>
-
-      <div className="search">
-        <input
-          placeholder="Search for movies"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <img
-          src={SearchIcon}
-          alt="search"
-          onClick={() => searchMovies(searchTerm)}
-        />
-      </div>
-
-      {movies?.length > 0 ? (
-        <div className="container">
-          {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-        </div>
-      ) : (
-        <div className="empty">
-          <h2>No movies found</h2>
-        </div>
+    <div className="pageLayout">
+      {isLoggedIn === true && (
+        <Navbar activePage={activePage} setActivePage={setActivePage} />
       )}
+
+      <main className="pageContent">
+        <h1>Annex Bios</h1>
+        {activePage === "loginPage" && (
+          <LoginPage onLogin={() => setIsLoggedIn(true)} />
+        )}
+        {activePage === "Home" && <Movie />}
+        {activePage === "Films" && <MoviesPlaying />}
+        {activePage === "Showtimes" && <RunTimes />}
+        {activePage === "Add movie" && <AddMovie />}
+      </main>
     </div>
   );
 };
-
 export default App;
