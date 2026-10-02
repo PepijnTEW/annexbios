@@ -46,8 +46,10 @@
                         <div id="vestigingen"
                             class="hidden absolute flex flex-col bg-white shadow-lg rounded-md p-2 gap-1 min-w-full z-30">
                             <a class="px-3 py-1 text-center text-sm whitespace-nowrap" href="#">leerdam</a>
-                            <a class="px-3 py-1 text-center text-sm whitespace-nowrap" href="#">maarssen</a>
-                            <a class="px-3 py-1 text-center text-sm whitespace-nowrap" href="#">breukelen</a>
+                            <a class="px-3 py-1 text-center text-sm whitespace-nowrap" href="https://annexbios-maarssen.lbhargie.nl" target="_blank" rel="noopener noreferrer">maarssen</a>
+                            <a class="px-3 py-1 text-center text-sm whitespace-nowrap" href="https://u250444.gluwebsite.nl/AnnexBios" target="_blank" rel="noopener noreferrer">Bilthoven</a>
+                            <a class="px-3 py-1 text-center text-sm whitespace-nowrap" href="https://u250404.gluwebsite.nl/AnnexBios5.1/main.php" target="_blank" rel="noopener noreferrer">Woerden</a>
+
                         </div>
                     </div>
                 </nav>
@@ -87,7 +89,7 @@
                             class="w-full h-32 sm:h-36 md:h-40 object-cover rounded-t-sm">
                         <p class="px-2 pt-2 text-sm sm:text-base">Maarssen</p>
                         <p class="px-2 pb-2 text-xs sm:text-sm">Rijksstraatweg 42, 3223 KA</p>
-                        <a href="#"
+                        <a  href="https://annexbios-maarssen.lbhargie.nl" target="_blank" rel="noopener noreferrer"
                             class="bg-[#9E2629] text-white text-center font-bold text-xs sm:text-sm px-4 py-2 m-2 rounded-sm whitespace-nowrap block mx-auto w-[calc(100%-1rem)]">
                             bezoek website
                         </a>
@@ -107,7 +109,7 @@
                             class="w-full h-32 sm:h-36 md:h-40 object-cover rounded-t-sm">
                         <p class="px-2 pt-2 text-sm sm:text-base">Bilthoven</p>
                         <p class="px-2 pb-2 text-xs sm:text-sm">Rijksstraatweg 42, 3223 KA</p>
-                        <a href="#"
+                        <a href="https://u250444.gluwebsite.nl/AnnexBios" target="_blank" rel="noopener noreferrer"
                             class="bg-[#6E4F7D] text-white text-center font-bold text-xs sm:text-sm px-4 py-2 m-2 rounded-sm whitespace-nowrap block mx-auto w-[calc(100%-1rem)]">
                             bezoek website
                         </a>
@@ -127,7 +129,7 @@
                             class="w-full h-32 sm:h-36 md:h-40 object-cover rounded-t-sm">
                         <p class="px-2 pt-2 text-sm sm:text-base">Woerden</p>
                         <p class="px-2 pb-2 text-xs sm:text-sm">Rijksstraatweg 42, 3223 KA</p>
-                        <a href="#"
+                        <a href="https://u250848.gluwebsite.nl/AnnexBios5.1/main.php" target="_blank" rel="noopener noreferrer"
                             class="bg-[#FF2525] text-white text-center font-bold text-xs sm:text-sm px-4 py-2 m-2 rounded-sm whitespace-nowrap block mx-auto w-[calc(100%-1rem)]">
                             bezoek website
                         </a>
@@ -160,7 +162,7 @@
             require 'includes/api.php';
 
             $token = '9|JaTe49xsmDqaiBv34hTxyrGUfh9KUsJLMyeZ3MdFf8f56ad2';
-            $films = haalFilmsOp($token, '?imdRating[gt]=7&active[eq]=true');
+            $films = haalFilmsOp($token, '?imdRating[gte]=7');
             $films = $films['data'] ?? [];
             $films = array_slice($films, 0, 6);
 
@@ -248,9 +250,9 @@
 
             <!-- links voorwaarden enzv -->
             <div class="flex flex-wrap m-2">
-                <a class="text-white mx-1" href="#">voorwaarden |</a>
-                <a class="text-white mx-1" href="#">privacy beleid |</a>
-                <a class="text-white mx-1" href="#">cookie disclaimer |</a>
+                <a class="text-white mx-1" href="https://softwire-social.com/" target="_blank" rel="noopener noreferrer">voorwaarden |</a>
+                <a class="text-white mx-1" href="https://softwire-social.com/" target="_blank" rel="noopener noreferrer">privacy beleid |</a>
+                <a class="text-white mx-1" href="https://softwire-social.com/" target="_blank" rel="noopener noreferrer">cookie disclaimer |</a>
             </div>
 
         </div>
